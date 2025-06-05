@@ -1,0 +1,559 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Property data containing images and descriptions
+    const propertyData = {
+        1: {
+            text: "Luxury Villa with Ocean View",
+            smallImages: ['assets/p-1-1.jpg', 'assets/p-1-2.jpg', 'assets/p-1-3.jpg', 'assets/p-1-4.jpg', 'assets/p-1-5.jpg'],
+            propertyImages: [
+                'assets/p-1-1.jpg',
+                'assets/p-1-2.jpg',
+                'assets/p-1-3.jpg',
+                'assets/p-1-4.jpg',
+                'assets/p-1-5.jpg'
+            ]
+        },
+        2: {
+            text: "Modern Downtown Apartment",
+            smallImages: ['assets/p-2-1.jpg', 'assets/p-2-2.jpg', 'assets/p-2-3.jpg', 'assets/p-2-4.jpg', 'assets/p-2-5.jpg'],
+            propertyImages: [
+                'assets/p-2-1.jpg',
+                'assets/p-2-2.jpg',
+                'assets/p-2-3.jpg',
+                'assets/p-2-4.jpg',
+                'assets/p-2-5.jpg'
+            ]
+        },
+        3: {
+            text: "Classic Countryside House",
+            smallImages: ['assets/p-3-1.jpeg', 'assets/p-3-2.jpeg', 'assets/p-3-3.jpeg', 'assets/p-3-4.jpeg', 'assets/p-3-5.jpeg'],
+            propertyImages: [
+                'assets/p-3-1.jpeg',
+                'assets/p-3-2.jpeg',
+                'assets/p-3-3.jpeg',
+                'assets/p-3-4.jpeg',
+                'assets/p-3-5.jpeg'
+            ]
+        },
+        4: {
+            text: "Minimalist Studio Loft",
+            smallImages: ['assets/p-4-1.jpeg', 'assets/p-4-2.jpg', 'assets/p-4-3.jpg', 'assets/p-4-4.jpg', 'assets/p-4-5.jpg'],
+            propertyImages: [
+                'assets/p-4-1.jpeg',
+                'assets/p-4-2.jpg',
+                'assets/p-4-3.jpg',
+                'assets/p-4-4.jpg',
+                'assets/p-4-5.jpg'
+            ]
+        },
+        5: {
+            text: "Mountain Retreat Cabin",
+            smallImages: ['assets/p-5-1.jpg', 'assets/p-5-2.jpg', 'assets/p-5-3.jpg', 'assets/p-5-4.jpg', 'assets/p-5-5.jpg'],
+            propertyImages: [
+                'assets/p-5-1.jpg',
+                'assets/p-5-2.jpg',
+                'assets/p-5-3.jpg',
+                'assets/p-5-4.jpg',
+                'assets/p-5-5.jpg'
+            ]
+        }
+    };
+
+    // Get DOM elements
+    const container = document.querySelector('.container');
+    const propertyRadios = document.querySelectorAll('.property-radio');
+    const smallImagesContainer = document.querySelector('.small-images-container');
+    const backgroundZoom = document.querySelector('.background-zoom');
+    const zoomImage = document.querySelector('.zoom-image');
+    const girlImage = document.querySelector('.girl-image');
+    const imageRadioGroup = document.querySelector('.image-radio-group');
+    const propertyImagesContainer = document.querySelector('.property-images-container');
+    const scrollThreshold = 50;
+    const labels = document.querySelectorAll(".image-radio-group .circular-label");
+    const group = document.querySelector(".image-radio-group");
+    const total = labels.length;
+
+    // State variables
+    let isCarouselVisible = false;
+    let currentActiveLabel = null;
+    let currentPropertyId = 3;
+    let propertyImagesVisible = false;
+    let currentCenterIndex = 2;
+    let currentRotation = 0;
+
+    // Animation settings
+    const maxScrollForAnimation = 2000;
+    const startZ = -1500;
+    const endZ = 200;
+    const imageAnimationScrollRange = 1800;
+    const imageAppearanceScrollGap = 800;
+    let appearedImages = {};
+    let nextImageIndexToAppear = 0;
+    let lastScrollPosition = 0;
+
+    // Target positions for property images
+    const cornerTargets = [
+        { x: -400, y: -200 },
+        { x: 400, y: -200 },
+        { x: -400, y: 200 },
+        { x: 400, y: 200 }
+    ];
+
+    // Initialize text displays for all properties
+    function initializeTextDisplays() {
+        labels.forEach(label => {
+            const propertyId = label.getAttribute('data-property');
+            const textElement = label.querySelector('.property-text-inline');
+            if (textElement && propertyData[propertyId]) {
+                textElement.textContent = propertyData[propertyId].text;
+            }
+        });
+
+        // Set default active property
+        const defaultLabel = document.querySelector('#property3 + label');
+        if (defaultLabel) {
+            defaultLabel.querySelector('.small-image').classList.add('active');
+            defaultLabel.classList.add('active-label');
+            defaultLabel.classList.add('shifted-up');
+            currentActiveLabel = defaultLabel;
+        }
+    }
+
+    // Initialize the application
+    function init() {
+        smallImagesContainer.classList.remove('visible');
+        smallImagesContainer.style.display = 'none';
+
+        backgroundZoom.classList.remove('completely-hidden');
+        zoomImage.classList.add('zoomed');
+        backgroundZoom.classList.add('zoomed');
+
+        girlImage.classList.remove('scrolled');
+        girlImage.classList.add('visible');
+
+        // Set default selected property
+        const defaultRadio = document.getElementById('property3');
+        if (defaultRadio) {
+            defaultRadio.checked = true;
+            const defaultLabel = defaultRadio.parentElement;
+            if (defaultLabel) {
+                defaultLabel.querySelector('.small-image').classList.add('active');
+                defaultLabel.classList.add('active-label');
+                defaultLabel.classList.add('shifted-up');
+                currentActiveLabel = defaultLabel;
+            }
+        }
+
+        initializeTextDisplays();
+        setupImageCarousel();
+        setupScrollListener();
+    }
+
+    // Set up scroll event listener
+    function setupScrollListener() {
+        let lastScroll = 0;
+        let ticking = false;
+
+        window.addEventListener('scroll', function() {
+            lastScroll = window.scrollY;
+
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    handleScroll(lastScroll);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        function handleScroll(currentScroll) {
+            // Hide property images if carousel isn't visible
+            if (!isCarouselVisible) {
+                if (propertyImagesContainer.style.display !== 'none') {
+                    propertyImagesContainer.style.display = 'none';
+                }
+                if (propertyImagesContainer.innerHTML !== '') {
+                    propertyImagesContainer.innerHTML = '';
+                    appearedImages = {};
+                    nextImageIndexToAppear = 0;
+                }
+            }
+
+            const scrollAfterThreshold = Math.max(0, currentScroll - scrollThreshold);
+
+            // Show/hide carousel based on scroll position
+            if (currentScroll > scrollThreshold && !isCarouselVisible) {
+                showCarousel();
+                propertyImagesContainer.innerHTML = '';
+                propertyImagesVisible = true;
+                appearedImages = {};
+                nextImageIndexToAppear = 0;
+
+                // Update page styling
+                document.body.classList.add('light-background');
+                document.body.classList.add('scrolled-state');
+                document.querySelector('.hero-text').classList.add('hidden-text');
+                document.querySelector('.hero-paragraph').classList.add('hidden-text');
+
+            } else if (currentScroll <= scrollThreshold && isCarouselVisible) {
+                hideCarousel();
+                propertyImagesContainer.innerHTML = '';
+                propertyImagesVisible = false;
+                appearedImages = {};
+                nextImageIndexToAppear = 0;
+
+                // Revert page styling
+                document.body.classList.remove('light-background');
+                document.body.classList.remove('scrolled-state');
+                document.querySelector('.hero-text').classList.remove('hidden-text');
+                document.querySelector('.hero-paragraph').classList.remove('hidden-text');
+            }
+
+            // Handle property image animations
+            if (isCarouselVisible && currentScroll > scrollThreshold) {
+                const imagesData = propertyData[currentPropertyId].propertyImages;
+                const totalImages = imagesData.length;
+                const startScrollForImages = scrollThreshold;
+
+                const nextAppearanceThreshold = startScrollForImages + (nextImageIndexToAppear * imageAppearanceScrollGap);
+
+                // Show next image when scrolling down
+                if (currentScroll > lastScrollPosition && currentScroll >= nextAppearanceThreshold && nextImageIndexToAppear < totalImages) {
+                    const indexToShow = nextImageIndexToAppear;
+                    const imagePathToShow = imagesData[indexToShow];
+                    const imageIdToShow = `property-${currentPropertyId}-image-${indexToShow}`;
+
+                    if (!appearedImages[imageIdToShow]) {
+                        createSinglePropertyImage(imagePathToShow, indexToShow, currentPropertyId);
+                        appearedImages[imageIdToShow] = true;
+                        nextImageIndexToAppear++;
+                    }
+                }
+
+                // Hide last image when scrolling up
+                const lastAppearedImageIndex = nextImageIndexToAppear - 1;
+                if (currentScroll < lastScrollPosition && lastAppearedImageIndex >= 0) {
+                    const disappearanceThreshold = startScrollForImages + (lastAppearedImageIndex * imageAppearanceScrollGap);
+                    const imageIdToHide = `property-${currentPropertyId}-image-${lastAppearedImageIndex}`;
+                    if (currentScroll < disappearanceThreshold && appearedImages[imageIdToHide]) {
+                        const wrapperToHide = document.getElementById(imageIdToHide);
+                        if(wrapperToHide) { wrapperToHide.remove(); }
+                        delete appearedImages[imageIdToHide];
+                        nextImageIndexToAppear--;
+                    }
+                }
+
+                // Animate visible images
+                for (const imageId in appearedImages) {
+                     const wrapper = document.getElementById(imageId);
+                     if (wrapper) {
+                         const parts = imageId.split('-');
+                         const index = parseInt(parts[parts.length - 1]);
+                         const animationStartThreshold = startScrollForImages + (index * imageAppearanceScrollGap);
+
+                         if (currentScroll < animationStartThreshold) {
+                             wrapper.remove();
+                             delete appearedImages[imageId];
+                             if (index === nextImageIndexToAppear - 1) {
+                                 nextImageIndexToAppear--;
+                             }
+                             continue;
+                         }
+
+                         const animationEndThreshold = animationStartThreshold + imageAnimationScrollRange;
+                         const imageScrollProgress = Math.max(0, (currentScroll - animationStartThreshold) / imageAnimationScrollRange);
+
+                         const cornerIndex = index % cornerTargets.length;
+                         const targetX = cornerTargets[cornerIndex].x;
+                         const targetY = cornerTargets[cornerIndex].y;
+
+                         const randomX = parseFloat(wrapper.dataset.randomX || 0);
+                         const randomY = parseFloat(wrapper.dataset.randomY || 0);
+                         let translateX = randomX + (targetX - randomX) * imageScrollProgress;
+                         let translateY = randomY + (targetY - randomY) * imageScrollProgress;
+                         let translateZ = startZ + (endZ - startZ) * imageScrollProgress;
+
+                         const dynamicZIndex = 500 + index * 10 + Math.floor(imageScrollProgress * 400);
+
+                         wrapper.style.transform = `translate3d(${translateX}px, ${translateY}px, ${translateZ}px)`;
+                         wrapper.style.zIndex = dynamicZIndex;
+                         wrapper.style.opacity = 1;
+                     }
+                }
+            }
+
+            lastScrollPosition = currentScroll;
+        }
+    }
+
+    // Create a property image element
+    function createSinglePropertyImage(imagePath, index, propertyId) {
+        const imageId = `property-${propertyId}-image-${index}`;
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('property-image-wrapper');
+        wrapper.id = imageId;
+
+        const randomX = (Math.random() - 0.5) * 800;
+        const randomY = (Math.random() - 0.5) * 600;
+        wrapper.dataset.randomX = randomX;
+        wrapper.dataset.randomY = randomY;
+
+        const img = document.createElement('img');
+        img.classList.add('property-image');
+        img.src = imagePath;
+        img.alt = `Property Image ${index + 1}`;
+
+        wrapper.appendChild(img);
+        propertyImagesContainer.appendChild(wrapper);
+
+        wrapper.style.transform = `translate3d(${randomX}px, ${randomY}px, ${startZ}px)`;
+        wrapper.style.opacity = 0;
+    }
+
+    // Show the property carousel
+    function showCarousel() {
+        smallImagesContainer.style.display = 'flex';
+        void smallImagesContainer.offsetWidth;
+        smallImagesContainer.classList.add('visible');
+        backgroundZoom.classList.add('completely-hidden');
+        girlImage.classList.add('scrolled');
+        smallImagesContainer.style.pointerEvents = 'auto';
+        isCarouselVisible = true;
+
+        propertyImagesContainer.style.display = 'block';
+    }
+
+    // Hide the property carousel
+    function hideCarousel() {
+        smallImagesContainer.classList.remove('visible');
+        backgroundZoom.classList.remove('completely-hidden');
+        girlImage.classList.remove('scrolled');
+        smallImagesContainer.style.pointerEvents = 'none';
+        isCarouselVisible = false;
+        
+        propertyImagesContainer.innerHTML = '';
+        propertyImagesVisible = false;
+        appearedImages = {};
+        nextImageIndexToAppear = 0;
+
+        setTimeout(() => {
+            if (!isCarouselVisible) {
+                smallImagesContainer.style.display = 'none';
+                propertyImagesContainer.style.display = 'none';
+                propertyImagesContainer.innerHTML = '';
+                propertyImagesVisible = false;
+            }
+        }, 500);
+    }
+
+    // Set up the image carousel behavior
+    function setupImageCarousel() {
+        const labels = document.querySelectorAll('.image-radio-group label');
+        labels.forEach(label => {
+            const propertyId = label.getAttribute('data-property');
+            const textElement = label.querySelector('.property-text-inline');
+            if (textElement && propertyData[propertyId]) {
+                textElement.textContent = propertyData[propertyId].text;
+            }
+        });
+
+        let currentOrder = [0, 1, 2, 3, 4];
+
+        function rotateToMiddle(clickedPos) {
+            const middleIndex = 2;
+            let steps = middleIndex - clickedPos;
+
+            function rotateArray(arr, n) {
+                n = ((n % arr.length) + arr.length) % arr.length;
+                return arr.slice(-n).concat(arr.slice(0, -n));
+            }
+
+            currentOrder = rotateArray(currentOrder, steps);
+
+            labels.forEach((label, index) => {
+                const newOrder = currentOrder.indexOf(index);
+                label.style.order = newOrder;
+            });
+        }
+
+        propertyRadios.forEach((radio, index) => {
+            radio.addEventListener('change', function() {
+                const clickedLabel = this.parentElement;
+                const clickedImg = clickedLabel.querySelector('.small-image');
+                const clickedPropertyId = parseInt(this.value);
+                
+                currentPropertyId = clickedPropertyId;
+
+                // Update background image
+                const firstImagePath = propertyData[clickedPropertyId].smallImages[0];
+                if (firstImagePath) {
+                    zoomImage.src = firstImagePath;
+                    zoomImage.classList.remove('zoomed');
+                    void zoomImage.offsetWidth;
+                    zoomImage.classList.add('zoomed');
+                }
+
+                // Update active states
+                document.querySelectorAll('.small-image').forEach(img => {
+                    img.classList.remove('active');
+                });
+                labels.forEach(l => l.classList.remove('active-label'));
+                
+                clickedImg.classList.add('active');
+                clickedLabel.classList.add('active-label');
+                
+                // Rotate to center
+                const clickedPos = currentOrder.indexOf(index);
+                rotateToMiddle(clickedPos);
+
+                // Update current active label
+                if (currentActiveLabel) {
+                    currentActiveLabel.classList.remove('shifted-up');
+                }
+                currentActiveLabel = clickedLabel;
+
+                // Reset image state
+                propertyImagesContainer.innerHTML = '';
+                propertyImagesVisible = true;
+                appearedImages = {};
+                nextImageIndexToAppear = 0;
+            });
+            
+            // Hover effects
+            radio.parentElement.addEventListener('mouseenter', function() {
+                if (!radio.checked) {
+                    const img = this.querySelector('.small-image');
+                    img.style.transform = 'scale(1.1)';
+                }
+            });
+            
+            radio.parentElement.addEventListener('mouseleave', function() {
+                if (!radio.checked) {
+                    const img = this.querySelector('.small-image');
+                    img.style.transform = 'scale(1)';
+                }
+            });
+        });
+        
+        // Set initial order
+        labels.forEach((label, index) => {
+            label.style.order = index;
+        });
+    }
+
+    // Text display functions
+    function showTextDisplay(text, label) {
+        const inlineTextDisplay = label.querySelector('.property-text-inline');
+        if (inlineTextDisplay) {
+            inlineTextDisplay.textContent = text;
+        }
+    }
+
+    function hideTextDisplay(label) {
+        const inlineTextDisplay = label.querySelector('.property-text-inline');
+        if (inlineTextDisplay) {
+            inlineTextDisplay.textContent = '';
+        }
+    }
+
+    // Reset to initial state
+    function resetToInitialState() {
+        smallImagesContainer.classList.remove('visible');
+        smallImagesContainer.style.display = 'none';
+        smallImagesContainer.style.pointerEvents = 'none';
+        isCarouselVisible = false;
+
+        backgroundZoom.classList.remove('completely-hidden');
+        backgroundZoom.classList.add('zoomed');
+        zoomImage.classList.add('zoomed');
+        girlImage.classList.remove('scrolled');
+        girlImage.classList.add('visible');
+
+        if(currentActiveLabel) {
+            hideTextDisplay(currentActiveLabel);
+            currentActiveLabel.classList.remove('active-label');
+            const activeImg = currentActiveLabel.querySelector('.small-image');
+            if(activeImg) activeImg.classList.remove('active');
+            currentActiveLabel = null;
+        }
+
+        const defaultRadio = document.getElementById('property3');
+        if(defaultRadio) {
+            defaultRadio.checked = true;
+            const defaultLabel = defaultRadio.parentElement;
+            showTextDisplay(propertyData[3].text, defaultLabel);
+            defaultLabel.classList.add('active-label');
+            const defaultImg = defaultLabel.querySelector('.small-image');
+            if(defaultImg) defaultImg.classList.add('active');
+            currentActiveLabel = defaultLabel;
+        }
+    }
+
+    // Initialize the application
+    init();
+
+    // Parallax effect for Try Now button
+    const tryNowButton = document.querySelector('.try-now-button');
+    const buttonText = tryNowButton.querySelector('.button-text');
+    const moveRange = 10;
+
+    tryNowButton.addEventListener('mousemove', (e) => {
+        const buttonRect = tryNowButton.getBoundingClientRect();
+        const centerX = buttonRect.left + buttonRect.width / 2;
+        const centerY = buttonRect.top + buttonRect.height / 2;
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        const diffX = mouseX - centerX;
+        const diffY = mouseY - centerY;
+
+        const moveX = (diffX / buttonRect.width) * moveRange * 2;
+        const moveY = (diffY / buttonRect.height) * moveRange * 2;
+
+        buttonText.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+
+    tryNowButton.addEventListener('mouseleave', () => {
+        buttonText.style.transform = `translate(0, 0)`;
+    });
+
+    // Carousel rotation functionality
+    const radioButtons = document.querySelectorAll('.small-radio-button');
+    const images = document.querySelectorAll('.small-image');
+    let currentOrder = [0, 1, 2, 3, 4];
+
+    function rotateToMiddle(clickedPos) {
+        const middleIndex = 2;
+        let steps = middleIndex - clickedPos;
+
+        function rotateArray(arr, n) {
+            n = ((n % arr.length) + arr.length) % arr.length;
+            return arr.slice(-n).concat(arr.slice(0, -n));
+        }
+
+        currentOrder = rotateArray(currentOrder, steps);
+        updateDOMOrder();
+    }
+
+    function updateDOMOrder() {
+        const radioContainer = document.getElementById('radioContainer');
+        const imageContainer = document.getElementById('imageContainer');
+
+        radioContainer.innerHTML = '';
+        imageContainer.innerHTML = '';
+
+        currentOrder.forEach(i => {
+            radioContainer.appendChild(radioButtons[i]);
+            imageContainer.appendChild(images[i]);
+        });
+
+        radioButtons[currentOrder[2]].checked = true;
+    }
+
+    radioButtons.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+            const clickedPos = currentOrder.indexOf(idx);
+            rotateToMiddle(clickedPos);
+        });
+    });
+});

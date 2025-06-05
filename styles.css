@@ -1,0 +1,787 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #000; /* Dark background by default */
+    min-height: 100vh;
+}
+
+body.light-background {
+    background-color: rgb(195, 195, 195); /* Light grey background for light mode */
+}
+
+.hidden-text {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Container for the small images that appear in a carousel */
+.small-images-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 1000;
+    padding: 20px 15px;
+    border-radius: 15px;
+    opacity: 0;
+    transition: all 0.5s ease;
+    will-change: transform, opacity;
+    width: 80%;
+    max-width: 800px;
+    min-height: 100px;
+}
+
+/* Main heading text above the small images */
+.images-heading {
+    position: fixed;
+    top: calc(50% - 300px);
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000;
+    font-size: 48px;
+    font-weight: normal;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    text-align: center;
+}
+
+/* Special styling for the "Dream" part of the heading */
+.images-heading .images-dream-text {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-weight: normal;
+    margin-left: 10px;
+    margin-right: 5px;
+    display: inline-block;
+    letter-spacing: -0.5px;
+}
+
+/* Force line break before "Dream" */
+.images-heading .images-dream-text::before {
+    content: "";
+    display: block;
+    width: 100%;
+    clear: both;
+}
+
+/* Styling for the "Machine" part of the heading */
+.images-heading .images-machine-text {
+    letter-spacing: -0.5px;
+    display: inline-block;
+}
+
+/* Show heading with animation when scrolled */
+body.scrolled-state .images-heading {
+    opacity: 1;
+    pointer-events: auto;
+    animation: waveRevealNoX 1s ease-out forwards;
+}
+
+/* Paragraph text below the heading */
+.images-paragraph {
+    position: fixed;
+    top: calc(50% - 180px);
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000;
+    font-size: 20px;
+    line-height: 1.4;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show paragraph with animation when scrolled */
+body.scrolled-state .images-paragraph {
+    pointer-events: auto;
+    animation: blinkIn 0.2s ease-out forwards;
+}
+
+/* Show the small images container when active */
+.small-images-container.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    display: flex;
+}
+
+/* Container for the image radio buttons */
+.image-radio-group {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: nowrap;
+    border: none;
+    position: relative;
+    padding: 20px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    perspective: 2000px;
+    transform-style: preserve-3d;
+    transform: rotateX(15deg); /* Slight downward tilt */
+}
+
+.property-radio {
+    display: none;
+}
+
+/* Styling for the small preview images */
+.small-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    flex-shrink: 0;
+    will-change: transform;
+    transform-style: preserve-3d;
+    filter: brightness(1.1) contrast(1.1);
+}
+
+/* Labels for the image radio buttons */
+.image-radio-group label {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    padding-bottom: 25px;
+    border: none;
+    border-radius: 15px;
+    background-color: transparent;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+    margin: 0 !important;
+    cursor: pointer;
+    min-width: 80px;
+    text-align: center;
+    margin-bottom: 0;
+    will-change: transform, order;
+    flex: 0 0 auto;
+    transform-style: preserve-3d;
+}
+
+/* Position images in a 3D circle formation */
+.image-radio-group label[style*="order: 0"] {
+    transform: rotateY(-144deg) translateZ(200px) translateY(120px) scale(0.8);
+}
+
+.image-radio-group label[style*="order: 1"] {
+    transform: rotateY(-72deg) translateZ(200px) translateY(120px) scale(0.9);
+}
+
+.image-radio-group label[style*="order: 2"] {
+    transform: rotateY(0deg) translateZ(200px) translateY(120px) scale(1);
+}
+
+.image-radio-group label[style*="order: 3"] {
+    transform: rotateY(72deg) translateZ(200px) translateY(120px) scale(0.9);
+}
+
+.image-radio-group label[style*="order: 4"] {
+    transform: rotateY(144deg) translateZ(200px) translateY(120px) scale(0.8);
+}
+
+/* Selected image styling */
+.image-radio-group label.selected-image-label {
+    z-index: 2;
+}
+
+.image-radio-group label.selected-image-label[style*="order: 2"] {
+    transform: rotateY(0deg) translateZ(300px) translateY(0px) scale(1.2) !important;
+}
+
+.image-radio-group label.selected-image-label[style*="order: 0"] {
+    transform: rotateY(-144deg) translateZ(150px) translateY(160px) scale(0.8);
+}
+
+.image-radio-group label.selected-image-label[style*="order: 1"] {
+    transform: rotateY(-72deg) translateZ(150px) translateY(160px) scale(0.9);
+}
+
+.image-radio-group label.selected-image-label[style*="order: 3"] {
+    transform: rotateY(72deg) translateZ(150px) translateY(160px) scale(0.9);
+}
+
+.image-radio-group label.selected-image-label[style*="order: 4"] {
+    transform: rotateY(144deg) translateZ(150px) translateY(160px) scale(0.8);
+}
+
+/* Hover effects for images */
+.image-radio-group label:hover .small-image {
+    transform: scale(1.15) translateZ(30px);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Ensure proper positioning for all order states */
+.image-radio-group label[style*="order: 0"],
+.image-radio-group label[style*="order: 1"],
+.image-radio-group label[style*="order: 2"],
+.image-radio-group label[style*="order: 3"],
+.image-radio-group label[style*="order: 4"] {
+    position: absolute !important;
+    left: auto !important;
+    right: auto !important;
+}
+
+/* Text that appears with each image */
+.property-text-inline {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    opacity: 0;
+    overflow: hidden;
+    white-space: normal;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+}
+
+/* Show text when image is selected */
+.image-radio-group label.selected-image-label .property-text-inline {
+    opacity: 1;
+    position: static;
+    margin: 0;
+    text-align: left;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    white-space: normal;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    flex-grow: 1;
+}
+
+/* Style for checked radio button state */
+.image-radio-group .property-radio:checked + label {
+    border: 2px solid white;
+    background-color: rgba(25, 25, 112, 0.8);
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    min-width: 200px;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Show text when radio is checked */
+.image-radio-group .property-radio:checked + label .property-text-inline {
+    opacity: 1;
+    position: static;
+    max-width: none;
+    white-space: normal;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    text-align: left;
+    margin-top: 0;
+    flex-grow: 1;
+}
+
+/* Special case for middle image */
+#property3 + label .small-image {
+    transform: scale(1.1);
+}
+
+/* Display for property text (not currently used) */
+.property-text-display {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    color: white;
+    font-size: 16px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    background-color: rgba(0,0,0,0.7);
+    padding: 8px 16px;
+    border-radius: 20px;
+    max-width: 300px;
+    transform-origin: left center;
+}
+
+/* Background zoom effect container */
+.background-zoom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 1;
+    transition: all 0.5s ease;
+    will-change: opacity, transform;
+    transform: scale(1);
+}
+
+/* Hidden state for background zoom */
+.background-zoom.completely-hidden {
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transform: scale(0.8);
+}
+
+/* Zoomable image styling */
+.zoom-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    transform: scale(0);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* Zoomed in state for image */
+.zoom-image.zoomed {
+    margin: 2% 1% 10% 2%;
+    width: 1450px;
+    height: 550px;
+    border-radius: 20px;
+    object-fit: cover;
+    transform: scale(1);
+}
+
+/* Container for the girl overlay image */
+.girl-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 2;
+    pointer-events: none;
+    padding-bottom: 0;
+}
+
+/* Girl image styling */
+.girl-image {
+    max-width: 70%;
+    max-height: 100vh;
+    object-fit: contain;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%) scale(1);
+    transition: all 0.5s ease;
+    margin-bottom: 0;
+}
+
+.girl-image.visible {
+    transform: translate(-50%) scale(1);
+}
+
+.girl-image.scrolled {
+    transform: translate(-50%) scale(0.5);
+    bottom: -150px;
+}
+
+/* Section for property images */
+.property-images-section {
+    position: relative;
+    width: 100%;
+    min-height: 200vh;
+    margin-top: 100vh;
+    perspective: 1000px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Container for property images */
+.property-images-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Wrapper for individual property images */
+.property-image-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 225px;
+    transform-style: preserve-3d;
+    opacity: 0;
+    transform: translate(-50%, -50%) translateZ(-1000px) rotateY(0deg) rotateX(0deg);
+    transition: transform 1s ease-out, opacity 0.8s ease-out;
+    pointer-events: none;
+}
+
+/* Show state for property images */
+.property-image-wrapper.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Property image styling */
+.property-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Text below property images */
+.property-text {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+/* Flying image animation */
+.flying-image {
+    position: fixed;
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    transform: translate(0, 0) scale(1);
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.5s ease;
+    pointer-events: none;
+    opacity: 1;
+}
+
+/* Spacer to enable scrolling */
+.scroll-spacer {
+    min-height: 6000px;
+}
+
+/* Overlay content container */
+.overlay-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    color: white;
+    pointer-events: none;
+}
+
+/* Container for text and buttons */
+.text-button-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.text-button-overlay > * {
+    pointer-events: auto;
+}
+
+/* Header links styling */
+.header-links {
+    position: fixed;
+    top: 50px;
+    left: auto;
+    right: 240px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+/* Show header links when scrolled */
+body.scrolled-state .header-links {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Individual header link styling */
+.header-link {
+    color: #000;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.header-link:hover {
+    color: #555;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Hero text heading */
+.hero-text h1 {
+    font-size: 5vw;
+    font-weight: normal;
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Hero text container */
+.hero-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Two different font styles for the hero text */
+.font-style-1 {
+    font-family: 'Georgia', serif;
+    font-weight: normal;
+    opacity: 0;
+    animation: waveReveal 1s ease-out forwards;
+}
+
+.font-style-2 {
+    font-family: 'Caveat', cursive;
+    font-weight: normal;
+    opacity: 0;
+    animation: waveReveal 1s ease-out forwards;
+}
+
+/* Animation for text reveal */
+@keyframes waveReveal {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Modified wave reveal for images heading */
+@keyframes waveRevealNoX {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translate(-50%, -10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Position each word of the hero text */
+.hero-text h1:nth-child(1) { /* New */
+    position: absolute;
+    top: 15%;
+    left: 8%;
+    animation-delay: 0s;
+}
+
+.hero-text h1:nth-child(2) { /* freedoms */
+    position: absolute;
+    top: 25%;
+    left: 15%;
+    animation-delay: 0.3s;
+}
+
+.hero-text h1:nth-child(3) { /* of */
+    position: absolute;
+    bottom: 35%;
+    right: 8%;
+    animation-delay: 0.6s;
+}
+
+.hero-text h1:nth-child(4) { /* imagination */
+    position: absolute;
+    bottom: 25%;
+    right: 8%;
+    animation-delay: 0.9s;
+}
+
+/* Hero paragraph styling */
+.hero-paragraph {
+    position: absolute;
+    top: 58%;
+    left: 7%;
+    font-size: 1.5vw;
+    line-height: 1.5;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    animation: blinkIn 0.2s ease-out forwards;
+    animation-delay: 0.9s;
+}
+
+/* Simple fade-in animation */
+@keyframes blinkIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* White text within paragraph */
+.hero-paragraph .white-text {
+    color: white;
+}
+
+/* Hidden state for paragraph */
+.hero-paragraph.hidden-text {
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Try Now button styling */
+.try-now-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 18px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    background-color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease, transform 0.5s ease;
+    overflow: hidden;
+}
+
+/* Move button to top when scrolled */
+body.scrolled-state .try-now-button {
+    bottom: auto;
+    top: 30px;
+    right: 30px;
+    background-color: #000;
+    color: #fff;
+}
+
+.try-now-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Button text animation */
+.try-now-button .button-text {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+}
+
+/* Website name/branding */
+.website-name {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    color: white;
+    font-weight: normal;
+    opacity: 0;
+    animation: blinkIn 0.2s ease-out forwards;
+    animation-delay: 0.3s;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    white-space: nowrap;
+}
+
+/* Move website name to top when scrolled */
+body.scrolled-state .website-name {
+    bottom: auto;
+    top: 30px;
+    left: 30px;
+    opacity: 1;
+    animation: none;
+    color: #000;
+}
+
+/* Dream part of the logo */
+.website-name .dream {
+    font-family: 'Georgia', serif;
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-right: -3px;
+    display: inline-block;
+    position: relative;
+    top: 0px;
+}
+
+/* Machine part of the logo */
+.website-name .machine {
+    font-family: 'Georgia', serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-left: 2px;
+    display: inline-block;
+    position: relative;
+    top: 0;
+}
