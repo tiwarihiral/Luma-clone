@@ -109,7 +109,7 @@ body.scrolled-state .images-heading {
     opacity: 0;
     pointer-events: none;
 }
-
+ 
 /* Show paragraph with animation when scrolled */
 body.scrolled-state .images-paragraph {
     pointer-events: auto;
