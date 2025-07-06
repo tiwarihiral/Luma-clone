@@ -19,7 +19,12 @@
             align-items: center;
         }
         .header {
+            position: sticky;
+            top: 0;
             width: 100%;
+            background-color: #fff; /* White background for the sticky header */
+            z-index: 1000; /* Ensure it stays on top */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
             max-width: 1000px; /* Adjusted max-width for job details page */
             padding: 20px;
             box-sizing: border-box;
@@ -254,6 +259,7 @@
             .header {
                 padding: 15px;
                 margin-bottom: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
             .header .logo img {
                 height: 25px;

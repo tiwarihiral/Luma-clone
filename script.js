@@ -79,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let propertyImagesVisible = false;
     let currentCenterIndex = 2;
     let currentRotation = 0;
+    let lastImageFullyVisible = false;
+    let girlImageHidden = false;
 
     // Animation settings
     const maxScrollForAnimation = 2000;
@@ -90,13 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let nextImageIndexToAppear = 0;
     let lastScrollPosition = 0;
 
-    // Target positions for property images
-    const cornerTargets = [
-        { x: -400, y: -200 },
-        { x: 400, y: -200 },
-        { x: -400, y: 200 },
-        { x: 400, y: 200 }
-    ];
+    // Track current animation progress (number of images shown)
+    let currentImageProgress = 0;
 
     // Initialize text displays for all properties
     function initializeTextDisplays() {
@@ -262,26 +259,168 @@ document.addEventListener('DOMContentLoaded', function() {
                          const animationEndThreshold = animationStartThreshold + imageAnimationScrollRange;
                          const imageScrollProgress = Math.max(0, (currentScroll - animationStartThreshold) / imageAnimationScrollRange);
 
-                         const cornerIndex = index % cornerTargets.length;
-                         const targetX = cornerTargets[cornerIndex].x;
-                         const targetY = cornerTargets[cornerIndex].y;
-
-                         const randomX = parseFloat(wrapper.dataset.randomX || 0);
-                         const randomY = parseFloat(wrapper.dataset.randomY || 0);
+                         // Grid arrangement for 5 images: 3 on first row, 2 on second row
+                         const gridSpacingX = 220;
+                         const gridSpacingY = 180;
+                         let rowTop = [], rowBottom = [];
+                         for (let i = 0; i < totalImages; i++) {
+                             if (i % 2 === 0) {
+                                 rowTop.push(i);
+                             } else {
+                                 rowBottom.push(i);
+                             }
+                         }
+                         let targetX = 0, targetY = 0;
+                         if (rowTop.includes(index)) {
+                             // Top row
+                             const pos = rowTop.indexOf(index);
+                             const centerIndex = (rowTop.length - 1) / 2;
+                             targetY = -gridSpacingY / 2;
+                             targetX = (pos - centerIndex) * gridSpacingX;
+                         } else {
+                             // Bottom row
+                             const pos = rowBottom.indexOf(index);
+                             const centerIndex = (rowBottom.length - 1) / 2;
+                             targetY = gridSpacingY / 2;
+                             targetX = (pos - centerIndex) * gridSpacingX;
+                         }
+                         // Shift only the 3rd image (index 2) to the right by 200px
+                         if (index === 2) {
+                             targetX += 200;
+                         }
+                         // Shift the 2nd and 4th images (indices 1 and 3) upward by 60px
+                         if (index === 1 || index === 3) {
+                             targetY -= 60;
+                         }
+                         // Shift the entire bottom row to the left by 100px
+                         if (rowBottom.includes(index)) {
+                             targetX -= 100;
+                         }
+                         const randomX = 0;
+                         const randomY = 0;
                          let translateX = randomX + (targetX - randomX) * imageScrollProgress;
                          let translateY = randomY + (targetY - randomY) * imageScrollProgress;
                          let translateZ = startZ + (endZ - startZ) * imageScrollProgress;
 
+                         // Slower scale-up effect
+                         const minScale = 0.7;
+                         const maxScale = 1.0;
+                         const scaleProgress = Math.min(1, imageScrollProgress * 0.7);
+                         const scale = minScale + (maxScale - minScale) * scaleProgress;
+
                          const dynamicZIndex = 500 + index * 10 + Math.floor(imageScrollProgress * 400);
 
-                         wrapper.style.transform = `translate3d(${translateX}px, ${translateY}px, ${translateZ}px)`;
+                         wrapper.style.transform = `translate3d(${translateX}px, ${translateY}px, ${translateZ}px) scale(${scale})`;
                          wrapper.style.zIndex = dynamicZIndex;
                          wrapper.style.opacity = 1;
+                         // Increase the size of only the 5th image (index 4) by 50px
+                         if (index === 4) {
+                             const img = wrapper.querySelector('.property-image');
+                             if (img) {
+                                 img.style.height = '270px';
+                                 img.style.width = '';
+                                 img.style.maxHeight = 'none';
+                                 img.style.maxWidth = 'none';
+                             }
+                             // Shift the wrapper left by 35px so the right edge stays fixed
+                             const currentTransform = wrapper.style.transform || '';
+                             const cleanedTransform = currentTransform.replace(/translateX\(-?\d+px\)/, '');
+                             wrapper.style.transform = `translateX(-35px) ${cleanedTransform}`.trim();
+
+                             if (imageScrollProgress >= 1) {
+                                 if (!girlImage.classList.contains('slide-down')) {
+                                     girlImage.classList.add('slide-down');
+                                     console.log('[DEBUG] Girl image slide-down triggered at final position');
+                                 }
+                                 // Move carousel to sticky row at top
+                                 const smallImagesContainer = document.querySelector('.small-images-container');
+                                 const imageRadioGroup = document.querySelector('.image-radio-group');
+                                 const propertyImagesContainer = document.querySelector('.property-images-container');
+                                 if (smallImagesContainer && !smallImagesContainer.classList.contains('sticky-row')) {
+                                     smallImagesContainer.classList.add('sticky-row');
+                                 }
+                                 if (imageRadioGroup && !imageRadioGroup.classList.contains('sticky-row-group')) {
+                                     imageRadioGroup.classList.add('sticky-row-group');
+                                 }
+                                 // Shift last property image left
+                                 const lastWrapper = document.getElementById(`property-${currentPropertyId}-image-4`);
+                                 if (lastWrapper && !lastWrapper.classList.contains('shift-left')) {
+                                     lastWrapper.classList.add('shift-left');
+                                 }
+                                 // Hide links and heading/para
+                                 const headerLinks = document.querySelector('.header-links');
+                                 const imagesHeading = document.querySelector('.images-heading');
+                                 const imagesParagraph = document.querySelector('.images-paragraph');
+                                 if (headerLinks) headerLinks.classList.add('hide-in-transition');
+                                 if (imagesHeading) imagesHeading.classList.add('hide-in-transition');
+                                 if (imagesParagraph) imagesParagraph.classList.add('hide-in-transition');
+                                 // Show property-side-text
+                                 const sideText = document.querySelector('.property-side-text');
+                                 if (sideText) sideText.style.display = 'block';
+                             } else {
+                                 if (girlImage.classList.contains('slide-down')) {
+                                     girlImage.classList.remove('slide-down');
+                                     console.log('[DEBUG] Girl image slide-down removed (not at final position)');
+                                 }
+                                 // Remove sticky row classes
+                                 const smallImagesContainer = document.querySelector('.small-images-container');
+                                 const imageRadioGroup = document.querySelector('.image-radio-group');
+                                 const propertyImagesContainer = document.querySelector('.property-images-container');
+                                 if (smallImagesContainer && smallImagesContainer.classList.contains('sticky-row')) {
+                                     smallImagesContainer.classList.remove('sticky-row');
+                                 }
+                                 if (imageRadioGroup && imageRadioGroup.classList.contains('sticky-row-group')) {
+                                     imageRadioGroup.classList.remove('sticky-row-group');
+                                 }
+                                 // Remove shift from last property image
+                                 const lastWrapper = document.getElementById(`property-${currentPropertyId}-image-4`);
+                                 if (lastWrapper && lastWrapper.classList.contains('shift-left')) {
+                                     lastWrapper.classList.remove('shift-left');
+                                 }
+                                 // Show links and heading/para
+                                 const headerLinks = document.querySelector('.header-links');
+                                 const imagesHeading = document.querySelector('.images-heading');
+                                 const imagesParagraph = document.querySelector('.images-paragraph');
+                                 if (headerLinks) headerLinks.classList.remove('hide-in-transition');
+                                 if (imagesHeading) imagesHeading.classList.remove('hide-in-transition');
+                                 if (imagesParagraph) imagesParagraph.classList.remove('hide-in-transition');
+                                 // Hide property-side-text
+                                 const sideText = document.querySelector('.property-side-text');
+                                 if (sideText) sideText.style.display = 'none';
+                             }
+                         } else {
+                             const img = wrapper.querySelector('.property-image');
+                             if (img) {
+                                 img.style.height = '';
+                                 img.style.width = '';
+                                 img.style.maxHeight = '';
+                                 img.style.maxWidth = '';
+                             }
+                         }
                      }
                 }
             }
 
+            const wasFullyVisible = lastImageFullyVisible;
+            lastImageFullyVisible = checkLastImageFullyVisible();
+            if (lastImageFullyVisible && !wasFullyVisible) {
+                girlImageHidden = false; // Reset so we can trigger on next scroll
+            }
+            if (lastImageFullyVisible && !girlImageHidden && currentScroll > lastScrollPosition) {
+                girlImageHidden = true;
+                girlImage.classList.add('slide-down');
+                console.log('[DEBUG] .slide-down added to girl image');
+            }
+            if (!lastImageFullyVisible && girlImageHidden) {
+                girlImageHidden = false;
+                girlImage.classList.remove('slide-down');
+                console.log('[DEBUG] .slide-down removed from girl image');
+            }
+
             lastScrollPosition = currentScroll;
+
+            // Track current animation progress (number of images shown)
+            currentImageProgress = nextImageIndexToAppear;
         }
     }
 
@@ -292,8 +431,8 @@ document.addEventListener('DOMContentLoaded', function() {
         wrapper.classList.add('property-image-wrapper');
         wrapper.id = imageId;
 
-        const randomX = (Math.random() - 0.5) * 800;
-        const randomY = (Math.random() - 0.5) * 600;
+        const randomX = 0;
+        const randomY = 0;
         wrapper.dataset.randomX = randomX;
         wrapper.dataset.randomY = randomY;
 
@@ -380,7 +519,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const clickedLabel = this.parentElement;
                 const clickedImg = clickedLabel.querySelector('.small-image');
                 const clickedPropertyId = parseInt(this.value);
-                
                 currentPropertyId = clickedPropertyId;
 
                 // Update background image
@@ -415,7 +553,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 propertyImagesContainer.innerHTML = '';
                 propertyImagesVisible = true;
                 appearedImages = {};
-                nextImageIndexToAppear = 0;
+                // Start new property animation from current progress
+                nextImageIndexToAppear = currentImageProgress;
+                for (let i = 0; i < nextImageIndexToAppear; i++) {
+                    const imagePath = propertyData[currentPropertyId].propertyImages[i];
+                    createSinglePropertyImage(imagePath, i, currentPropertyId);
+                    appearedImages[`property-${currentPropertyId}-image-${i}`] = true;
+                }
+                updateShowcaseMode();
+                // Immediately update animation state for new property
+                if (typeof handleScroll === 'function') {
+                    handleScroll(window.scrollY);
+                }
             });
             
             // Hover effects
@@ -505,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const mouseY = e.clientY;
 
         const diffX = mouseX - centerX;
-        const diffY = mouseY - centerY;
+        const diffY = mouseY - centerY; 
 
         const moveX = (diffX / buttonRect.width) * moveRange * 2;
         const moveY = (diffY / buttonRect.height) * moveRange * 2;
@@ -556,4 +705,46 @@ document.addEventListener('DOMContentLoaded', function() {
             rotateToMiddle(clickedPos);
         });
     });
+
+    function updateShowcaseMode() {
+        const imageRadioGroup = document.querySelector('.image-radio-group');
+        const body = document.body;
+        const labels = Array.from(document.querySelectorAll('.image-radio-group label'));
+
+        // Find the label with the highest order
+        let rightmostLabel = labels[0];
+        let maxOrder = parseInt(rightmostLabel.style.order) || 0;
+        labels.forEach(label => {
+            const order = parseInt(label.style.order) || 0;
+            if (order > maxOrder) {
+                maxOrder = order;
+                rightmostLabel = label;
+            }
+        });
+
+        // If the rightmost label is also the active one, activate showcase mode
+        if (rightmostLabel.classList.contains('active-label')) {
+            body.classList.add('showcase-mode');
+            imageRadioGroup.classList.add('showcase-row');
+        } else {
+            body.classList.remove('showcase-mode');
+            imageRadioGroup.classList.remove('showcase-row');
+        }
+    }
+
+    function checkLastImageFullyVisible() {
+        const lastImageWrapper = document.getElementById(`property-${currentPropertyId}-image-4`);
+        if (!lastImageWrapper) return false;
+        const style = window.getComputedStyle(lastImageWrapper);
+        const opacity = parseFloat(style.opacity);
+        const transform = style.transform;
+        let zValue = null;
+        if (transform && transform.startsWith('matrix3d')) {
+            const values = transform.match(/matrix3d\(([^)]+)\)/)[1].split(',').map(Number);
+            zValue = values[14];
+        } else if (transform && transform.startsWith('matrix')) {
+            zValue = 0;
+        }
+        return opacity > 0.95 && zValue !== null && Math.abs(zValue - endZ) < 5;
+    }
 });

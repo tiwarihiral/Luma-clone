@@ -17,14 +17,14 @@
 
     .container {
       display: flex;
-      gap: 20px;
+      gap: 30px;
       opacity: 0;
       animation: fadeIn 0.5s ease-out 0.3s forwards;
     }
 
     .icon {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       background-size: cover;
       background-position: center;
@@ -39,8 +39,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
       background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 80%);
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
@@ -48,11 +48,11 @@
       z-index: -1;
     }
 
-    .icon1 { background-image: url('https://imgs.search.brave.com/GGMBRoC0Rp70Lap8xC8nEUNe91v3KLA75SG_anngsHg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jbG91ZC10aGF0/LWlzLXNreS10aGF0/LWlzLWJsdWVfMTEx/NTc4MS0yOTg1Lmpw/Zz9zZW10PWFpc19o/eWJyaWQmdz03NDA'); animation-delay: 0.3s; }
-    .icon2 { background-image: url('https://banner2.cleanpng.com/cb2/kqu/uhg/abn53sy1n.webp'); animation-delay: 0.6s; }
-    .icon3 { background-image: url('https://as2.ftcdn.net/jpg/05/72/06/93/1000_F_572069310_OfvG7xOSwVvRBrUDXtLtKrsSUBu2f0CT.jpg'); animation-delay: 0.9s; }
-    .icon4 { background-image: url('gosh.png'); animation-delay: 1.2s; }
-    .icon5 { background-image: url('flower.png'); animation-delay: 1.5s; }
+    .icon1 { background-image: url('image-1.jpg'); animation-delay: 0.3s; }
+    .icon2 { background-image: url('image-2.jpg'); animation-delay: 0.6s; }
+    .icon3 { background-image: url('image-3.jpg'); animation-delay: 0.9s; }
+    .icon4 { background-image: url('image-4.jpg'); animation-delay: 1.2s; }
+    .icon5 { background-image: url('image-5.jpg'); animation-delay: 1.5s; }
 
     @keyframes iconPop {
       0% { opacity: 0; transform: scale(0.5); }
@@ -97,14 +97,9 @@
     <div class="icon icon5"></div>
   </div>
 
-  <div class="website" id="website">
-    Welcome to the Website
-  </div>
-
   <script>
     setTimeout(() => {
       document.getElementById('iconContainer').style.display = 'none';
-      document.getElementById('website').style.display = 'flex';
       // Redirect to index.html after animation
       setTimeout(() => {
         window.location.href = 'index.html';

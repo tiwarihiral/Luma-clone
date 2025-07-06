@@ -18,6 +18,19 @@
             flex-direction: column;
             align-items: center;
         }
+        .page-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #f7f7f7; /* Match body background */
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .container {
             width: 100%;
             max-width: 800px;
@@ -26,7 +39,7 @@
         }
         .logo {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 0; /* Remove previous margin */
         }
         .logo img {
             height: 40px; /* Adjust as needed */
@@ -166,8 +179,8 @@
             .container {
                 padding: 20px 15px;
             }
-            .logo {
-                margin-bottom: 30px;
+            .page-header {
+                padding: 15px;
             }
             .logo img {
                 height: 30px;
@@ -219,11 +232,13 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <header class="page-header">
         <div class="logo">
             <img src="assets/luma_logo.png" alt="Luma Logo">
         </div>
+    </header>
 
+    <div class="container">
         <div class="mission-section">
             <h2>Our mission is to build multimodal AI to expand human imagination and capabilities.</h2>
             <p>
