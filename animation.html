@@ -7,7 +7,7 @@
   <style>
     body {
       margin: 0;
-      background: #000;
+      background: #000;IUTREZHK;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -17,14 +17,14 @@
 
     .container {
       display: flex;
-      gap: 30px;
+      gap: 48px;
       opacity: 0;
       animation: fadeIn 0.5s ease-out 0.3s forwards;
     }
 
     .icon {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background-size: cover;
       background-position: center;
@@ -39,8 +39,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 110px;
-      height: 110px;
+      width: 120px;
+      height: 120px;
       background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 80%);
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
@@ -48,11 +48,13 @@
       z-index: -1;
     }
 
-    .icon1 { background-image: url('image-1.jpg'); animation-delay: 0.3s; }
-    .icon2 { background-image: url('image-2.jpg'); animation-delay: 0.6s; }
-    .icon3 { background-image: url('image-3.jpg'); animation-delay: 0.9s; }
-    .icon4 { background-image: url('image-4.jpg'); animation-delay: 1.2s; }
-    .icon5 { background-image: url('image-5.jpg'); animation-delay: 1.5s; }
+    .icon1 { background-image: url('assets/c7a7f7da-cd3e-4652-9e07-7f22ce623bc4.png'); animation-delay: 0.3s; background-size: 120px; }
+    .icon2 { background-image: url('assets/i.png'); animation-delay: 0.6s; background-size: 120px; }
+    .icon3 { background-image: url('assets/g.png'); animation-delay: 0.9s; }
+    .icon4 { background-image: url('assets/e.jpg'); animation-delay: 1.2s; }
+    .icon5 { background-image: url('assets/t.png'); animation-delay: 1.5s; }
+    .icon6 { background-image: url('assets/c7a7f7da-cd3e-4652-9e07-7f22ce623bc4.png'); animation-delay: 1.8s; }
+    .icon7 { background-image: url('assets/i.png'); animation-delay: 2.1s; }
 
     @keyframes iconPop {
       0% { opacity: 0; transform: scale(0.5); }
@@ -72,20 +74,6 @@
       0% { opacity: 1; transform: scale(1); }
       100% { opacity: 0; transform: scale(0.8); }
     }
-
-    .website {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      color: #000;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-    }
   </style>
 </head>
 <body>
@@ -95,15 +83,14 @@
     <div class="icon icon3"></div>
     <div class="icon icon4"></div>
     <div class="icon icon5"></div>
+    <div class="icon icon6"></div>
+    <div class="icon icon7"></div>
   </div>
 
   <script>
     setTimeout(() => {
-      document.getElementById('iconContainer').style.display = 'none';
       // Redirect to index.html after animation
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1000); // Wait 1 second after showing "Welcome" message
+      window.location.href = 'index.html';
     }, 4000); // 4 seconds
   </script>
 </body>
