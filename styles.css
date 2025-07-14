@@ -50,11 +50,11 @@ body.light-background {
 /* Main heading text above the small images */
 .images-heading {
     position: fixed;
-    top: calc(50% - 300px);
+    top: calc(55% - 300px);
     left: 50%;
     transform: translateX(-50%);
     color: #000;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: normal;
     z-index: 1000;
     opacity: 0;
@@ -68,6 +68,7 @@ body.light-background {
     font-family: 'Georgia', serif;
     font-style: italic;
     font-weight: normal;
+
     margin-left: 10px;
     margin-right: 5px;
     display: inline-block;
@@ -375,10 +376,10 @@ body.scrolled-state .images-paragraph {
 
 /* Zoomed in state for image */
 .zoom-image.zoomed {
-    margin: 2% 1% 10% 2%;
-    width: 1450px;
-    height: 550px;
-    border-radius: 20px;
+    margin: 1% 1% 10% 2%;
+    width: 1470px;
+    height: 570px;
+    border-radius: 15px;
     object-fit: cover;
     transform: scale(1);
 }
@@ -521,6 +522,7 @@ body.scrolled-state .images-paragraph {
     min-height: 6000px;
 }
 
+
 /* Overlay content container */
 .overlay-content {
     position: fixed;
@@ -530,8 +532,28 @@ body.scrolled-state .images-paragraph {
     height: 100%;
     z-index: 5;
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
     pointer-events: none;
 }
+
+.hero-text h1 {
+    margin: 0;
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    line-height: 1.2;
+}
+
+.hero-text {
+    margin-bottom: 20px;
+}
+
+
+
+
 
 /* Container for text and buttons */
 .text-button-overlay {
@@ -549,19 +571,21 @@ body.scrolled-state .images-paragraph {
 }
 
 /* Header links styling */
+
 .header-links {
     position: fixed;
-    top: 50px;
-    left: auto;
-    right: 240px;
+    top: 20px;
+    right: 20px;
     z-index: 10;
     display: flex;
     align-items: center;
     gap: 20px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
+    opacity: 1; /* Make sure it shows */
+    pointer-events: auto;
+    flex-wrap: wrap;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
 }
+
 
 /* Show header links when scrolled */
 body.scrolled-state .header-links {
@@ -583,25 +607,15 @@ body.scrolled-state .header-links {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
-/* Hero text heading */
-.hero-text h1 {
+Hero text heading 
+ .hero-text h1 {
     font-size: 5vw;
     font-weight: normal;
     margin: 0;
     line-height: 1.1;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
+} */
 
-/* Hero text container */
-.hero-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Two different font styles for the hero text */
 .font-style-1 {
     font-family: 'Georgia', serif;
     font-weight: normal;
@@ -715,8 +729,12 @@ body.scrolled-state .header-links {
 
 /* Try Now button styling */
 .try-now-button {
+
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 1rem;
     position: fixed;
-    bottom: 30px;
+     bottom: 30px;
     right: 30px;
     padding: 18px 40px;
     font-size: 20px;
@@ -755,6 +773,11 @@ body.scrolled-state .try-now-button {
 
 /* Website name/branding */
 .website-name {
+
+    margin-top: 30px;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    display: flex;
+    gap: 5px;
     position: fixed;
     bottom: 30px;
     left: 30px;
@@ -780,7 +803,7 @@ body.scrolled-state .website-name {
 /* Dream part of the logo */
 .website-name .dream {
     font-family: 'Georgia', serif;
-    font-size: 42px;
+    font-size: 30px;
     font-weight: 900;
     letter-spacing: -0.5px;
     margin-right: -3px;
@@ -800,6 +823,7 @@ body.scrolled-state .website-name {
     position: relative;
     top: 0;
 }
+
 .showcase-mode .girl-image {
     display: none !important;
 }
@@ -921,7 +945,7 @@ body.scrolled-state .website-name {
     vertical-align: middle;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
     .property-side-text {
         left: 2vw;
         max-width: 90vw;

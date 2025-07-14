@@ -747,4 +747,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return opacity > 0.95 && zValue !== null && Math.abs(zValue - endZ) < 5;
     }
+
 });
