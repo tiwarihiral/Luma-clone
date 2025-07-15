@@ -11,193 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&display=swap" rel="stylesheet">
 </head>
- <style>/* Responsive styles */
-      @media (max-width: 770px) {
-        .container {
-          overflow-x: hidden;
-        }
-
-        .background-zoom img {
-          width: 100%;
-          height: auto;
-        }
-
-        .girl-overlay img {
-          max-width: 80%;
-          height: auto;
-        }
-
-        .text-button-overlay {
-          padding: 20px;
-        }
-
-        .hero-text h1 {
-          font-size: 2rem;
-          line-height: 1.2;
-        }
-
-        .hero-paragraph {
-          font-size: 1rem;
-          line-height: 1.4;
-        }
-        .header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #000;
-  color: white;
-  line-height: 1.2;
-  padding: 3.2px 2.5px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 6%;
- z-index: 1000;
-}
-
-.header-links {
-  display: flex;
-  gap: 20px;
-}
-
-.header-link {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  margin: 0 10px;
-  
-}
-
-/* Toggle Icon Style */
-.menu-toggle {
-  font-size: 2.2rem; /* 🔍 Bigger size */
-  cursor: pointer;
-   display: none !important; /* Hidden by default */
-  position : absolute;
-}
-
-/* ===== Responsive Styles ===== */
-@media (max-width: 770px) {
-  .menu-toggle {
-    display: block !important; /* Hide toggle icon on larger screens */
-   
-  }
-
-  .header-links {
-    display: none;
-    flex-direction: column;
-    background: #5e3d3d;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 15px 20px;
-    z-index: 998;
-  }
-
-  .header-links.show {
-    display: flex;
-  }
-}
- .images-heading-wrapper {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-wrap: wrap; /* Just in case it overflows on smallest screens */
-          gap: 10px;
-          padding: 10px 15px;
-          text-align: center;
-          
-
-        }
-
-        .images-heading {
-        font-size: clamp(1.2rem, 4vw, 2.5rem);
-        line-height: 1.2;
-        margin: 0;
-        text-align: center;
-        }
-
-       .images-dream-text {
-        font-size: clamp(1.5rem, 5vw, 3rem);
-        font-weight: bold;
-        color: #007bff;
-}
-
-        @media (max-width: 500px) {
-          .images-heading {
-            font-size: 1rem;
-          }
-
-          .images-dream-text {
-            font-size: 1.5rem;
-          }
-        }
-
-        .small-images-container {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .circular-label {
-          margin: 5px;
-        }
-
-        .images-heading {
-          font-size: 1.5rem;
-          text-align: center;
-        }
-
-        .images-paragraph {
-          font-size: 1rem;
-          text-align: center;
-        }
-        .images-heading {
-          font-size: 2rem;
-          text-align: center;
-          margin-top: 30px;
-          padding: 0 15px;
-          line-height: 1.3;
-          word-wrap: break-word;
-        }
-
-        .images-dream-text {
-          color: #00f;
-          font-weight: bold;
-        }
-
-        .images-paragraph {
-          font-size: 1.2rem;
-          text-align: center;
-
-          padding: 0 15px;
-          margin-top: 10px;
-          line-height: 1.6;
-          word-wrap: break-word;
-        }
-
-        /* ✅ Responsive for smaller screens */
-        @media (max-width: 770px) {
-          .images-heading {
-            font-size: 1.4rem;
-          }
-
-          .images-paragraph {
-            font-size: 1rem;
-          }
-        }
-
-        @media (max-width: 500px) {
-          .images-heading {
-            font-size: 1.1rem;
-          }
-
-          .images-paragraph {
-            font-size: 0.95rem;
-          }
-        }
-    }
-        </style>
 <body>
     <div class="container">
         <!-- ============ BACKGROUND ELEMENTS ============ -->
@@ -206,7 +19,7 @@
         </div>
         
         <div class="girl-overlay">
-            <img src="assets/girl.png" alt="AI character" class="girl-image">
+            <img src="girl2.png" alt="AI character" class="girl-image">
         </div>
 
         <!-- ============ MAIN CONTENT ============ -->
@@ -229,7 +42,6 @@
                 
                 <!-- Navigation Links -->
                 <div class="header-links">
-                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
                     <a href="#" class="header-link">Join Us</a>
                     <a href="#" class="header-link">Photon</a>
                     <a href="#" class="header-link">Ray2</a>
@@ -318,11 +130,6 @@
         </div>
     </div>
 
-     <script src="script.js">
-              function toggleMenu() {
-        const menu = document.getElementById("mobileMenu");
-        menu.classList.toggle("show");
-      }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
