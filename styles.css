@@ -945,7 +945,7 @@ body.scrolled-state .website-name {
     vertical-align: middle;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     .property-side-text {
         left: 2vw;
         max-width: 90vw;
