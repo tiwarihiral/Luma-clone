@@ -747,5 +747,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return opacity > 0.95 && zValue !== null && Math.abs(zValue - endZ) < 5;
     }
+    
+    
+  let lastScrollY = window.scrollY;
+  const header = document.querySelector('.header-container');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY) {
+      // Scrolling down
+      header.classList.add('hide-on-scroll');
+      header.classList.remove('show-on-scroll');
+    } else {
+      // Scrolling up
+      header.classList.remove('hide-on-scroll');
+      header.classList.add('show-on-scroll');
+    }
+    lastScrollY = window.scrollY;
+  });
+
+
 
 });
