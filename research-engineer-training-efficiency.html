@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Engineer - Training Efficiency - AIGETAI Careers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; border-bottom: 1px solid #e1e5e9; position: sticky; top: 0; z-index: 100; }
+        .back-arrow { font-size: 1.5rem; text-decoration: none; color: #333; font-weight: bold; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #333; }
+        .job-page-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+        .job-details-sidebar { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 100px; }
+        .job-title-main { font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; color: #333; }
+        .job-details-sidebar > div { margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .label { font-weight: 500; color: #666; }
+        .value { font-weight: 600; color: #333; }
+        .job-content { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
+        .tabs { display: flex; border-bottom: 1px solid #e1e5e9; }
+        .tab-button { flex: 1; padding: 1rem; border: none; background: none; cursor: pointer; font-size: 1rem; font-weight: 500; color: #666; transition: all 0.3s ease; }
+        .tab-button.active { color: #333; border-bottom: 2px solid #007bff; }
+        .tab-button:hover { background-color: #f8f9fa; }
+        .tab-content { display: none; padding: 2rem; }
+        .tab-content.active { display: block; }
+        .tab-content h3 { margin: 1.5rem 0 1rem 0; color: #333; }
+        .tab-content ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .tab-content li { margin-bottom: 0.5rem; }
+        .note { background: #f8f9fa; padding: 1rem; border-radius: 4px; margin: 1rem 0; font-style: italic; color: #666; }
+        .apply-button-section { text-align: center; margin: 2rem 0; }
+        .apply-button { background-color: #6a00ff; color: #fff; padding: 15px 30px; border: none; border-radius: 8px; font-size: 18px; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease; text-decoration: none; display: inline-block;}
+        .apply-button:hover { background-color: #5a00e0;}
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: inherit; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .radio-group { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer; }
+        .radio-group input[type="radio"] { width: auto; }
+        .required-star { color: #dc3545; }
+        .file-upload { border: 2px dashed #ddd; padding: 2rem; text-align: center; border-radius: 4px; cursor: pointer; transition: border-color 0.3s ease; }
+        .file-upload:hover { border-color: #007bff; }
+        .file-upload input[type="file"] { display: none; }
+        .submit-button { background: #6a00ff; color: white; padding: 1rem 2rem; border: none; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease;}
+        .submit-button:hover { background: #5a00e0;}
+        .footer { text-align: center; padding: 2rem; color: #666; border-top: 1px solid #e1e5e9; margin-top: 2rem; }
+        @media (max-width: 768px) { .job-page-container { grid-template-columns: 1fr; padding: 0 1rem; } .job-details-sidebar { position: static; margin-bottom: 1rem; } .header { padding: 1rem; } .tabs { flex-direction: column; } .tab-button { text-align: left; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="join-us.html" class="back-arrow">&#8592;</a>
+        <div class="logo">AIGETAI</div>
+        <div></div>
+    </div>
+    <div class="job-page-container">
+        <div class="job-details-sidebar">
+            <div class="job-title-main">Research Engineer - Training Efficiency</div>
+            <div><span class="label">Location</span><span class="value">Palo Alto, CA</span></div>
+            <div><span class="label">Employment Type</span><span class="value">Full time</span></div>
+            <div><span class="label">Location Type</span><span class="value">Hybrid</span></div>
+            <div><span class="label">Department</span><span class="value">Research & Applied Research</span></div>
+            <div><span class="label">Compensation</span><span class="value">$220K - $300K</span></div>
+        </div>
+        <div class="job-content">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'overview')">Overview</button>
+                <button class="tab-button" onclick="openTab(event, 'application')">Application</button>
+            </div>
+            <div id="overview" class="tab-content active">
+                <p>We are seeking a Research Engineer focused on Training Efficiency to join our research team and help optimize the training processes for our large-scale AI models. This role will focus on developing techniques to reduce training time, improve computational efficiency, and enable faster iteration cycles for model development.</p>
+                <h3>Responsibilities</h3>
+                <ul>
+                    <li>Develop and implement techniques to accelerate model training</li>
+                    <li>Optimize distributed training strategies and communication patterns</li>
+                    <li>Research and implement gradient compression and quantization methods</li>
+                    <li>Design efficient data loading and preprocessing pipelines</li>
+                    <li>Develop mixed precision training and optimization techniques</li>
+                    <li>Implement and optimize memory-efficient training methods</li>
+                    <li>Research novel approaches to reduce computational requirements</li>
+                    <li>Collaborate with infrastructure teams to optimize hardware utilization</li>
+                    <li>Analyze and profile training bottlenecks and performance issues</li>
+                </ul>
+                <h3>Background</h3>
+                <ul>
+                    <li>4+ years of experience in machine learning or systems engineering</li>
+                    <li>Strong programming skills in Python, C++, and CUDA</li>
+                    <li>Deep understanding of distributed training and parallel computing</li>
+                    <li>Experience with PyTorch, TensorFlow, or similar frameworks</li>
+                    <li>Knowledge of GPU architecture and optimization techniques</li>
+                    <li>Experience with high-performance computing and cluster management</li>
+                    <li>Understanding of numerical optimization and linear algebra</li>
+                    <li>Experience with profiling and performance analysis tools</li>
+                    <li>Master's degree in Computer Science, Engineering, or related field (PhD preferred)</li>
+                </ul>
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Competitive salary with equity options</li>
+                    <li>Comprehensive health, dental, and vision insurance</li>
+                    <li>401(k) matching and flexible spending accounts</li>
+                    <li>Flexible work arrangements and remote work options</li>
+                    <li>Professional development and conference attendance</li>
+                    <li>Collaborative and innovative work environment</li>
+                    <li>Opportunity to work on cutting-edge training optimization</li>
+                    <li>Access to state-of-the-art compute infrastructure</li>
+                </ul>
+                <p class="note">Note: This role requires deep technical expertise in training optimization and systems performance</p>
+                <div class="apply-button-section">
+                    <a href="#application" class="apply-button" onclick="openTab(event, 'application')">Apply for this Job</a>
+                </div>
+            </div>
+            <div id="application" class="tab-content">
+                <h3>Application Form</h3>
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name<span class="required-star">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name<span class="required-star">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email<span class="required-star">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="currentCompany">Current Company</label>
+                        <input type="text" id="currentCompany" name="currentCompany">
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExperience">Years of ML/Systems Engineering Experience<span class="required-star">*</span></label>
+                        <select id="yearsExperience" name="yearsExperience" required>
+                            <option value="">Select experience level</option>
+                            <option value="1-2">1-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="6-8">6-8 years</option>
+                            <option value="8+">8+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="education">Highest Education Level</label>
+                        <select id="education" name="education">
+                            <option value="">Select education level</option>
+                            <option value="bachelors">Bachelor's Degree</option>
+                            <option value="masters">Master's Degree</option>
+                            <option value="phd">PhD</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalInfo">Tell us about your experience with training optimization and why you're interested in joining AIGETAI<span class="required-star">*</span></label>
+                        <textarea id="additionalInfo" name="additionalInfo" placeholder="Share your experience with distributed training, performance optimization, and what excites you about improving training efficiency..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume">Resume/CV<span class="required-star">*</span></label>
+                        <div class="file-upload" onclick="document.getElementById('resumeFile').click()">
+                            <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" required>
+                            <p>Click to upload your resume (PDF, DOC, or DOCX)</p>
+                        </div>
+                    </div>
+                    <p style="margin-bottom: 10px;">Are you able to relocate to the San Francisco Bay Area?<span class="required-star">*</span></p>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="relocation" value="yes" required>
+                            Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="relocation" value="no" required>
+                            No
+                        </label>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <button type="submit" class="submit-button">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 AIGETAI. All rights reserved.</p>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById('resumeFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) { const fileUpload = document.querySelector('.file-upload p'); fileUpload.textContent = `Selected: ${file.name}`; }
+        });
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your application! We will review your submission and get back to you soon.');
+        });
+    </script>
+</body>
+</html> 

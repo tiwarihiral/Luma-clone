@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Executive – Advertising - AIGETAI Careers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header .logo {
+            font-weight: bold;
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+        .back-arrow {
+            font-size: 24px;
+            text-decoration: none;
+            color: #555;
+            padding-right: 15px;
+        }
+        .back-arrow:hover {
+            color: #000;
+        }
+        .job-page-container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 0 20px 40px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .job-details-sidebar {
+            flex: 0 0 250px;
+            padding-top: 20px;
+        }
+        .job-details-sidebar div {
+            margin-bottom: 15px;
+        }
+        .job-details-sidebar .label {
+            font-weight: 500;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .job-details-sidebar .value {
+            font-size: 16px;
+            color: #333;
+        }
+        .job-content {
+            flex: 1;
+            min-width: 400px;
+        }
+        .job-title-main {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #777;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+        .tab-button.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+            font-weight: 500;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .tab-content p, .tab-content ul {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .tab-content ul {
+            list-style: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        .tab-content ul li {
+            margin-bottom: 10px;
+        }
+        .tab-content .note {
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .apply-button-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .apply-button {
+            background-color: #6a00ff;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .apply-button:hover {
+            background-color: #5a00e0;
+        }
+        .recaptcha-info {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+        .recaptcha-info a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* Application Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #333;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #555;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-group .upload-box {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            color: #777;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .form-group .upload-box:hover {
+            border-color: #007bff;
+        }
+        .form-group .upload-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .form-group .upload-button:hover {
+            background-color: #0056b3;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        .form-group label.radio-label {
+            display: inline-block;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .footer {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer-links a {
+            color: #777;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .ashby-logo {
+            font-weight: bold;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+                margin-bottom: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .header .logo {
+                font-size: 1.5rem;
+            }
+            .job-page-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 15px 30px 15px;
+            }
+            .job-details-sidebar {
+                flex: none;
+                width: 100%;
+                padding-top: 0;
+            }
+            .job-title-main {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            .tabs {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            .tab-button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .tab-content p, .tab-content ul {
+                font-size: 15px;
+            }
+            .apply-button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            .form-group input, .form-group textarea {
+                width: 100%;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+                font-size: 12px;
+                text-align: center;
+            }
+            .footer-links a {
+                margin: 0 8px;
+            }
+        }
+        .required-star {
+            color: red;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="join-us.html" class="back-arrow">&#8592;</a>
+        <div class="logo">
+            AIGETAI
+        </div>
+        <div></div>
+    </div>
+
+    <div class="job-page-container">
+        <div class="job-details-sidebar">
+            <div class="job-title-main">Account Executive – Advertising</div>
+
+            <div>
+                <span class="label">Location</span>
+                <span class="value">Palo Alto, CA</span>
+            </div>
+            <div>
+                <span class="label">Employment Type</span>
+                <span class="value">Full time</span>
+            </div>
+            <div>
+                <span class="label">Location Type</span>
+                <span class="value">Hybrid</span>
+            </div>
+            <div>
+                <span class="label">Department</span>
+                <span class="value">GTM</span>
+            </div>
+            <div>
+                <span class="label">Compensation</span>
+                <span class="value">$150K - $250K + Commission</span>
+            </div>
+        </div>
+
+        <div class="job-content">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'overview')">Overview</button>
+                <button class="tab-button" onclick="openTab(event, 'application')">Application</button>
+            </div>
+
+            <div id="overview" class="tab-content active">
+                <p>We are seeking a dynamic and results-driven Account Executive to join our growing sales team and focus on advertising partnerships. You will be responsible for driving revenue growth by selling our AI-powered creative solutions to advertising agencies, brands, and media companies. You will develop and execute strategic sales plans to expand our presence in the advertising industry.</p>
+                <p>You thrive in a fast-paced startup environment and have a proven track record of exceeding sales targets in the advertising or technology space. You understand the unique challenges and opportunities in the advertising industry and can effectively communicate the value of AI-powered creative tools to potential clients.</p>
+
+                <h3>Responsibilities</h3>
+                <ul>
+                    <li>Develop and execute strategic sales plans to achieve revenue targets in the advertising sector</li>
+                    <li>Build and maintain relationships with key decision-makers at advertising agencies and brands</li>
+                    <li>Conduct product demonstrations and presentations to showcase our AI capabilities</li>
+                    <li>Negotiate complex deals and contracts with enterprise clients</li>
+                    <li>Collaborate with marketing and product teams to develop targeted campaigns</li>
+                    <li>Stay current with industry trends and competitive landscape</li>
+                    <li>Manage the full sales cycle from prospecting to closing</li>
+                    <li>Provide market feedback to product and marketing teams</li>
+                    <li>Attend industry events and conferences to build relationships</li>
+                    <li>Mentor and support junior sales team members</li>
+                </ul>
+
+                <h3>Background</h3>
+                <ul>
+                    <li>5+ years of experience in B2B sales, with a focus on advertising, media, or technology</li>
+                    <li>Proven track record of exceeding sales targets and managing complex enterprise deals</li>
+                    <li>Strong understanding of the advertising industry and creative workflows</li>
+                    <li>Experience selling to advertising agencies, brands, or media companies</li>
+                    <li>Excellent communication and presentation skills</li>
+                    <li>Ability to understand and articulate technical concepts to non-technical audiences</li>
+                    <li>Strong negotiation and contract management skills</li>
+                    <li>Experience with CRM systems (Salesforce preferred)</li>
+                    <li>Ability to work in a fast-paced, high-growth environment</li>
+                    <li>Bachelor's degree in Business, Marketing, or related field preferred</li>
+                </ul>
+
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Competitive base salary and uncapped commission structure</li>
+                    <li>Comprehensive health, dental, and vision benefits</li>
+                    <li>Flexible work arrangements and remote-friendly culture</li>
+                    <li>Professional development opportunities</li>
+                    <li>Collaborative and innovative work environment</li>
+                    <li>Opportunity to shape the future of AI in advertising</li>
+                </ul>
+
+                <p class="note">Note: This role requires experience in advertising sales or related field</p>
+
+                <div class="apply-button-section">
+                    <a href="#application" class="apply-button" onclick="openTab(event, 'application')">Apply for this Job</a>
+                </div>
+            </div>
+
+            <div id="application" class="tab-content">
+                <div class="form-group">
+                    <div id="applicationLimitsInfo" style="background-color: #e6f7ff; border-left: 5px solid #007bff; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                        <p style="margin: 0; font-weight: 500; color: #007bff; font-size: 16px;">&#x24D8; This job has application limits</p>
+                        <p style="margin-top: 10px; font-size: 14px; color: #555;">A quick note about applications:</p>
+                        <p style="margin-top: 5px; font-size: 14px; color: #555;">To ensure we can give proper consideration to everyone who's excited about joining AIGETAI, we have a few gentle guidelines around applications. We ask that you submit no more than 2 applications to any positions across our company within a 30-day period. If you've applied for a specific role and weren't selected, we welcome you to apply again after 90 days as our team and needs evolve.</p>
+                        <p style="margin-top: 5px; font-size: 14px; color: #555;">These guidelines help our recruiting team provide thoughtful responses to everyone. We genuinely appreciate your interest in AIGETAI and look forward to reviewing your application!</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>&#x25cf; Autofill from resume</label>
+                    <div class="upload-box">
+                        Upload your resume here to autofill key application fields.
+                        <input type="file" id="resumeUpload" style="display: none;">
+                        <button class="upload-button" onclick="document.getElementById('resumeUpload').click()">Upload file</button>
+                    </div>
+                </div>
+
+                <div id="validationErrors" style="background-color: #f8d7da; border-left: 5px solid #dc3545; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px; display: none;">
+                    <p style="margin: 0; font-weight: 500; font-size: 16px;">Your form needs corrections</p>
+                    <ul id="errorList" style="margin-top: 10px; margin-bottom: 0; padding-left: 20px;">
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name<span class="required-star">*</span></label>
+                    <input type="text" id="name" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email<span class="required-star">*</span></label>
+                    <input type="email" id="email" placeholder="hello@example.com...">
+                </div>
+                <div class="form-group">
+                    <label for="currentCompany">Current company</label>
+                    <input type="text" id="currentCompany" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="currentLocation">Current location</label>
+                    <input type="text" id="currentLocation" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" placeholder="1-234-567-8910...">
+                </div>
+                <div class="form-group">
+                    <label for="resume">Resume<span class="required-star">*</span></label>
+                    <div class="upload-box">
+                        <input type="file" id="resume" style="display: none;">
+                        <span id="resumeFileName">Upload file or drag and drop here</span>
+                        <button class="upload-button" onclick="document.getElementById('resume').click()">Upload file</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="additionalInfo">Additional information</label>
+                    <textarea id="additionalInfo" placeholder="Tell us about your experience in advertising sales and why you're interested in joining AIGETAI..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input type="text" id="linkedin" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="twitter">Twitter</label>
+                    <input type="text" id="twitter" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="homepage">Homepage</label>
+                    <input type="text" id="homepage" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="portfolio">Portfolio</label>
+                    <input type="text" id="portfolio" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label>Background</label>
+                    <p style="margin-bottom: 10px;">Are you able to relocate to the Bay Area?<span class="required-star">*</span></p>
+                    <label class="radio-label"><input type="radio" name="relocate" value="yes-live-here"> I already live here</label><br>
+                    <label class="radio-label"><input type="radio" name="relocate" value="yes-relocate"> I can relocate for the right role</label><br>
+                    <label class="radio-label"><input type="radio" name="relocate" value="no-relocate"> I cannot relocate</label>
+                </div>
+
+                <div class="apply-button-section">
+                    <button type="submit" class="apply-button">Submit Application &#x27A4;</button>
+                </div>
+            </div>
+            <div class="recaptcha-info">
+                This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="powered-by">Powered by <span class="ashby-logo">Aigetai</span></div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Security</a>
+            <a href="#">Vulnerability Disclosure</a>
+        </div>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Initialize with overview tab open
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Check if there's a hash in the URL and open the corresponding tab
+            const hash = window.location.hash;
+            if (hash) {
+                const tabName = hash.substring(1); // Remove the #
+                const tabButton = document.querySelector(`.tab-button[onclick*=\'${tabName}\']`);
+                if (tabButton) {
+                    tabButton.click();
+                } else {
+                    document.querySelector('.tab-button.active').click();
+                }
+            } else {
+                document.querySelector('.tab-button.active').click();
+            }
+        });
+        
+        // Handle file name display for resume upload
+        document.getElementById('resume').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'Upload file or drag and drop here';
+            document.getElementById('resumeFileName').textContent = fileName;
+        });
+        document.getElementById('resumeUpload').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'Upload your resume here to autofill key application fields.';
+            document.querySelector('.form-group .upload-box').childNodes[0].nodeValue = fileName;
+        });
+
+        // Form validation
+        document.querySelector('.apply-button-section button[type="submit"]').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            const errorList = document.getElementById('errorList');
+            const validationErrorsDiv = document.getElementById('validationErrors');
+            errorList.innerHTML = '';
+            validationErrorsDiv.style.display = 'none';
+
+            let errorsFound = false;
+
+            // Check Name
+            const nameInput = document.getElementById('name');
+            if (nameInput.value.trim() === '') {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Name';
+                errorList.appendChild(li);
+            }
+
+            // Check Email
+            const emailInput = document.getElementById('email');
+            if (emailInput.value.trim() === '') {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Email';
+                errorList.appendChild(li);
+            }
+
+            // Check Resume
+            const resumeInput = document.getElementById('resume');
+            if (resumeInput.files.length === 0) {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Resume';
+                errorList.appendChild(li);
+            }
+
+            // Check Relocation radio buttons
+            const relocateRadios = document.querySelectorAll('input[name="relocate"]');
+            let relocateSelected = false;
+            for (const radio of relocateRadios) {
+                if (radio.checked) {
+                    relocateSelected = true;
+                    break;
+                }
+            }
+            if (!relocateSelected) {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Are you able to relocate to the Bay Area?';
+                errorList.appendChild(li);
+            }
+
+            if (errorsFound) {
+                validationErrorsDiv.style.display = 'block';
+                document.getElementById('application').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Form submitted successfully (for demonstration purposes)!');
+            }
+        });
+
+    </script>
+</body>
+</html> 
