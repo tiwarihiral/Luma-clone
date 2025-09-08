@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Property data containing images and descriptions
+    // Property data containing images and descriptions - Updated to match Luma's AI themes
     const propertyData = {
         1: {
-            text: "Luxury Villa with Ocean View",
+            text: "Cinematic Visuals for Film",
             smallImages: ['assets/p-1-1.jpg', 'assets/p-1-2.jpg', 'assets/p-1-3.jpg', 'assets/p-1-4.jpg', 'assets/p-1-5.jpg'],
             propertyImages: [
                 'assets/p-1-1.jpg',
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         },
         2: {
-            text: "Modern Downtown Apartment",
+            text: "Interior Design Visuals",
             smallImages: ['assets/p-2-1.jpg', 'assets/p-2-2.jpg', 'assets/p-2-3.jpg', 'assets/p-2-4.jpg', 'assets/p-2-5.jpg'],
             propertyImages: [
                 'assets/p-2-1.jpg',
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         },
         3: {
-            text: "Classic Countryside House",
+            text: "Fashion & Style Visuals",
             smallImages: ['assets/p-3-1.jpeg', 'assets/p-3-2.jpeg', 'assets/p-3-3.jpeg', 'assets/p-3-4.jpeg', 'assets/p-3-5.jpeg'],
             propertyImages: [
                 'assets/p-3-1.jpeg',
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         },
         4: {
-            text: "Minimalist Studio Loft",
+            text: "Music & Entertainment Visuals",
             smallImages: ['assets/p-4-1.jpeg', 'assets/p-4-2.jpg', 'assets/p-4-3.jpg', 'assets/p-4-4.jpg', 'assets/p-4-5.jpg'],
             propertyImages: [
                 'assets/p-4-1.jpeg',
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         },
         5: {
-            text: "Mountain Retreat Cabin",
+            text: "E-commerce & Product Visuals",
             smallImages: ['assets/p-5-1.jpg', 'assets/p-5-2.jpg', 'assets/p-5-3.jpg', 'assets/p-5-4.jpg', 'assets/p-5-5.jpg'],
             propertyImages: [
                 'assets/p-5-1.jpg',
@@ -98,22 +98,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize text displays for all properties
     function initializeTextDisplays() {
         labels.forEach(label => {
-            const propertyId = label.getAttribute('data-property');
-            const textElement = label.querySelector('.property-text-inline');
-            if (textElement && propertyData[propertyId]) {
-                textElement.textContent = propertyData[propertyId].text;
-            }
+            const propertyId = parseInt(label.getAttribute('data-property'));
+            const text = propertyData[propertyId].text;
+            const textDisplay = label.querySelector('.property-text-inline');
+            textDisplay.textContent = text;
         });
-
-        // Set default active property
-        const defaultLabel = document.querySelector('#property3 + label');
-        if (defaultLabel) {
-            defaultLabel.querySelector('.small-image').classList.add('active');
-            defaultLabel.classList.add('active-label');
-            defaultLabel.classList.add('shifted-up');
-            currentActiveLabel = defaultLabel;
-        }
     }
+
+
+
+
 
     // Initialize the application
     function init() {
@@ -143,6 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeTextDisplays();
         setupImageCarousel();
         setupScrollListener();
+        
+        // Initialize carousel with default property images
+        updateCarouselImages(3);
     }
 
     // Set up scroll event listener
@@ -530,6 +527,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     zoomImage.classList.add('zoomed');
                 }
 
+                // Update carousel images for the new property
+                updateCarouselImages(clickedPropertyId);
+
                 // Update active states
                 document.querySelectorAll('.small-image').forEach(img => {
                     img.classList.remove('active');
@@ -604,6 +604,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Update carousel images for a specific property
+    function updateCarouselImages(propertyId) {
+        const property = propertyData[propertyId];
+        if (!property) return;
+
+        // Get all carousel images
+        const carouselImages = document.querySelectorAll('.small-image');
+        
+        // Update each carousel image with the corresponding property image
+        carouselImages.forEach((img, index) => {
+            if (property.smallImages[index]) {
+                img.src = property.smallImages[index];
+                img.alt = property.text + ' - Image ' + (index + 1);
+            }
+        });
+
+        // Update text displays for all labels
+        labels.forEach((label, index) => {
+            const radio = label.previousElementSibling;
+            if (radio && radio.checked) {
+                showTextDisplay(property.text, label);
+            } else {
+                hideTextDisplay(label);
+            }
+        });
+    }
+
     // Reset to initial state
     function resetToInitialState() {
         smallImagesContainer.classList.remove('visible');
@@ -634,6 +661,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const defaultImg = defaultLabel.querySelector('.small-image');
             if(defaultImg) defaultImg.classList.add('active');
             currentActiveLabel = defaultLabel;
+            
+            // Update carousel images to default property
+            updateCarouselImages(3);
         }
     }
 
@@ -747,24 +777,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return opacity > 0.95 && zValue !== null && Math.abs(zValue - endZ) < 5;
     }
-    
-    
-  let lastScrollY = window.scrollY;
-  const header = document.querySelector('.header-container');
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > lastScrollY) {
-      // Scrolling down
-      header.classList.add('hide-on-scroll');
-      header.classList.remove('show-on-scroll');
-    } else {
-      // Scrolling up
-      header.classList.remove('hide-on-scroll');
-      header.classList.add('show-on-scroll');
-    }
-    lastScrollY = window.scrollY;
-  });
-
-
-
 });
