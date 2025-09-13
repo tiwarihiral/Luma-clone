@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const propertyData = {
         1: {
             text: "Cinematic Visuals for Film",
+            promptText: "Can I have the model by the water",
             smallImages: ['assets/p-1-1.jpg', 'assets/p-1-2.jpg', 'assets/p-1-3.jpg', 'assets/p-1-4.jpg', 'assets/p-1-5.jpg'],
             propertyImages: [
                 'assets/p-1-1.jpg',
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         2: {
             text: "Interior Design Visuals",
+            promptText: "Can I have the view for kitchen",
             smallImages: ['assets/p-2-1.jpg', 'assets/p-2-2.jpg', 'assets/p-2-3.jpg', 'assets/p-2-4.jpg', 'assets/p-2-5.jpg'],
             propertyImages: [
                 'assets/p-2-1.jpg',
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         3: {
             text: "Fashion & Style Visuals",
+            promptText: "Can I have this desert be raining",
             smallImages: ['assets/p-3-1.jpeg', 'assets/p-3-2.jpeg', 'assets/p-3-3.jpeg', 'assets/p-3-4.jpeg', 'assets/p-3-5.jpeg'],
             propertyImages: [
                 'assets/p-3-1.jpeg',
@@ -36,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         4: {
             text: "Music & Entertainment Visuals",
+            promptText: "Can I see this musician in Iceland",
             smallImages: ['assets/p-4-1.jpeg', 'assets/p-4-2.jpg', 'assets/p-4-3.jpg', 'assets/p-4-4.jpg', 'assets/p-4-5.jpg'],
             propertyImages: [
                 'assets/p-4-1.jpeg',
@@ -47,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         5: {
             text: "E-commerce & Product Visuals",
+            promptText: "Can I have the flowers in terrarium",
             smallImages: ['assets/p-5-1.jpg', 'assets/p-5-2.jpg', 'assets/p-5-3.jpg', 'assets/p-5-4.jpg', 'assets/p-5-5.jpg'],
             propertyImages: [
                 'assets/p-5-1.jpg',
@@ -138,6 +143,10 @@ document.addEventListener('DOMContentLoaded', function() {
         setupImageCarousel();
         setupScrollListener();
         
+        // Initialize property images container
+        propertyImagesContainer.style.display = 'none';
+        propertyImagesContainer.style.pointerEvents = 'none';
+        
         // Initialize carousel with default property images
         updateCarouselImages(3);
     }
@@ -187,6 +196,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.classList.add('scrolled-state');
                 document.querySelector('.hero-text').classList.add('hidden-text');
                 document.querySelector('.hero-paragraph').classList.add('hidden-text');
+                
+                // Show header links when scrolled (same time as Try Now button moves to top)
+                const headerLinks = document.querySelector('.header-links');
+                if (headerLinks) {
+                    headerLinks.style.opacity = '1';
+                    headerLinks.style.pointerEvents = 'auto';
+                }
 
             } else if (currentScroll <= scrollThreshold && isCarouselVisible) {
                 hideCarousel();
@@ -200,6 +216,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.classList.remove('scrolled-state');
                 document.querySelector('.hero-text').classList.remove('hidden-text');
                 document.querySelector('.hero-paragraph').classList.remove('hidden-text');
+                
+                // Hide header links when not scrolled
+                const headerLinks = document.querySelector('.header-links');
+                if (headerLinks) {
+                    headerLinks.style.opacity = '0';
+                    headerLinks.style.pointerEvents = 'none';
+                }
             }
 
             // Handle property image animations
@@ -254,7 +277,12 @@ document.addEventListener('DOMContentLoaded', function() {
                          }
 
                          const animationEndThreshold = animationStartThreshold + imageAnimationScrollRange;
-                         const imageScrollProgress = Math.max(0, (currentScroll - animationStartThreshold) / imageAnimationScrollRange);
+                         let imageScrollProgress = Math.max(0, (currentScroll - animationStartThreshold) / imageAnimationScrollRange);
+                         
+                         // Stop the last image (index 4) at 110% scroll progress
+                         if (index === 4 && imageScrollProgress >= 1.1) {
+                             imageScrollProgress = 1.1;
+                         }
 
                          // Grid arrangement for 5 images: 3 on first row, 2 on second row
                          const gridSpacingX = 220;
@@ -295,36 +323,48 @@ document.addEventListener('DOMContentLoaded', function() {
                          }
                          const randomX = 0;
                          const randomY = 0;
-                         let translateX = randomX + (targetX - randomX) * imageScrollProgress;
-                         let translateY = randomY + (targetY - randomY) * imageScrollProgress;
-                         let translateZ = startZ + (endZ - startZ) * imageScrollProgress;
+                         let translateX, translateY, translateZ, scale;
+                         
+                         // Special handling for the last image at 110% scroll progress
+                         if (index === 4 && imageScrollProgress >= 1.1) {
+                             // Use exact position specified by user
+                             translateX = 242.636;
+                             translateY = -99.26;
+                             translateZ = 374.911;
+                             scale = 0.931607;
+                         } else {
+                             // Normal animation for all other cases
+                             translateX = randomX + (targetX - randomX) * imageScrollProgress;
+                             translateY = randomY + (targetY - randomY) * imageScrollProgress;
+                             translateZ = startZ + (endZ - startZ) * imageScrollProgress;
 
-                         // Slower scale-up effect
-                         const minScale = 0.7;
-                         const maxScale = 1.0;
-                         const scaleProgress = Math.min(1, imageScrollProgress * 0.7);
-                         const scale = minScale + (maxScale - minScale) * scaleProgress;
+                             // Slower scale-up effect
+                             const minScale = 0.7;
+                             const maxScale = 1.0;
+                             const scaleProgress = Math.min(1, imageScrollProgress * 0.7);
+                             scale = minScale + (maxScale - minScale) * scaleProgress;
+                         }
 
                          const dynamicZIndex = 500 + index * 10 + Math.floor(imageScrollProgress * 400);
 
                          wrapper.style.transform = `translate3d(${translateX}px, ${translateY}px, ${translateZ}px) scale(${scale})`;
                          wrapper.style.zIndex = dynamicZIndex;
                          wrapper.style.opacity = 1;
-                         // Increase the size of only the 5th image (index 4) by 50px
-                         if (index === 4) {
-                             const img = wrapper.querySelector('.property-image');
-                             if (img) {
-                                 img.style.height = '270px';
-                                 img.style.width = '';
-                                 img.style.maxHeight = 'none';
-                                 img.style.maxWidth = 'none';
-                             }
-                             // Shift the wrapper left by 35px so the right edge stays fixed
-                             const currentTransform = wrapper.style.transform || '';
-                             const cleanedTransform = currentTransform.replace(/translateX\(-?\d+px\)/, '');
-                             wrapper.style.transform = `translateX(-35px) ${cleanedTransform}`.trim();
+                        // Increase the size of only the 5th image (index 4) by 50px
+                        if (index === 4) {
+                            const img = wrapper.querySelector('.property-image');
+                            if (img) {
+                                img.style.height = '270px';
+                                img.style.width = '';
+                                img.style.maxHeight = 'none';
+                                img.style.maxWidth = 'none';
+                            }
+                            // Shift the wrapper left by 35px so the right edge stays fixed
+                            const currentTransform = wrapper.style.transform || '';
+                            const cleanedTransform = currentTransform.replace(/translateX\(-?\d+px\)/, '');
+                            wrapper.style.transform = `translateX(-35px) ${cleanedTransform}`.trim();
 
-                             if (imageScrollProgress >= 1) {
+                             if (imageScrollProgress >= 1.1) {
                                  if (!girlImage.classList.contains('slide-down')) {
                                      girlImage.classList.add('slide-down');
                                      console.log('[DEBUG] Girl image slide-down triggered at final position');
@@ -344,6 +384,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                  if (lastWrapper && !lastWrapper.classList.contains('shift-left')) {
                                      lastWrapper.classList.add('shift-left');
                                  }
+                                 // Show prompt text box
+                                 const promptBox = wrapper.querySelector('.prompt-text-box');
+                                 if (promptBox && !promptBox.classList.contains('visible')) {
+                                     promptBox.classList.add('visible');
+                                 }
                                  // Hide links and heading/para
                                  const headerLinks = document.querySelector('.header-links');
                                  const imagesHeading = document.querySelector('.images-heading');
@@ -351,9 +396,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                  if (headerLinks) headerLinks.classList.add('hide-in-transition');
                                  if (imagesHeading) imagesHeading.classList.add('hide-in-transition');
                                  if (imagesParagraph) imagesParagraph.classList.add('hide-in-transition');
-                                 // Show property-side-text
-                                 const sideText = document.querySelector('.property-side-text');
-                                 if (sideText) sideText.style.display = 'block';
+                                // Show property-side-text
+                                const sideText = document.querySelector('.property-side-text');
+                                if (sideText) {
+                                    sideText.style.display = 'block';
+                                    sideText.style.opacity = '1';
+                                }
                              } else {
                                  if (girlImage.classList.contains('slide-down')) {
                                      girlImage.classList.remove('slide-down');
@@ -374,6 +422,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                  if (lastWrapper && lastWrapper.classList.contains('shift-left')) {
                                      lastWrapper.classList.remove('shift-left');
                                  }
+                                 // Hide prompt text box
+                                 const promptBox = wrapper.querySelector('.prompt-text-box');
+                                 if (promptBox && promptBox.classList.contains('visible')) {
+                                     promptBox.classList.remove('visible');
+                                 }
                                  // Show links and heading/para
                                  const headerLinks = document.querySelector('.header-links');
                                  const imagesHeading = document.querySelector('.images-heading');
@@ -381,9 +434,12 @@ document.addEventListener('DOMContentLoaded', function() {
                                  if (headerLinks) headerLinks.classList.remove('hide-in-transition');
                                  if (imagesHeading) imagesHeading.classList.remove('hide-in-transition');
                                  if (imagesParagraph) imagesParagraph.classList.remove('hide-in-transition');
-                                 // Hide property-side-text
-                                 const sideText = document.querySelector('.property-side-text');
-                                 if (sideText) sideText.style.display = 'none';
+                                // Hide property-side-text
+                                const sideText = document.querySelector('.property-side-text');
+                                if (sideText) {
+                                    sideText.style.display = 'none';
+                                    sideText.style.opacity = '0';
+                                }
                              }
                          } else {
                              const img = wrapper.querySelector('.property-image');
@@ -439,6 +495,30 @@ document.addEventListener('DOMContentLoaded', function() {
         img.alt = `Property Image ${index + 1}`;
 
         wrapper.appendChild(img);
+
+        // Add text input box for the last image (index 4)
+        if (index === 4) {
+            const promptBox = document.createElement('div');
+            promptBox.classList.add('prompt-text-box');
+            
+            const promptText = document.createElement('span');
+            promptText.classList.add('prompt-text');
+            promptText.textContent = propertyData[propertyId].promptText;
+            
+            const sendButton = document.createElement('div');
+            sendButton.classList.add('send-button');
+            
+            const sendIcon = document.createElement('div');
+            sendIcon.classList.add('send-icon');
+            sendIcon.innerHTML = '↑';
+            
+            sendButton.appendChild(sendIcon);
+            promptBox.appendChild(promptText);
+            promptBox.appendChild(sendButton);
+            
+            wrapper.appendChild(promptBox);
+        }
+
         propertyImagesContainer.appendChild(wrapper);
 
         wrapper.style.transform = `translate3d(${randomX}px, ${randomY}px, ${startZ}px)`;
@@ -456,6 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isCarouselVisible = true;
 
         propertyImagesContainer.style.display = 'block';
+        propertyImagesContainer.style.pointerEvents = 'none';
     }
 
     // Hide the property carousel
@@ -529,6 +610,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Update carousel images for the new property
                 updateCarouselImages(clickedPropertyId);
+                
+                // Update prompt text for the last image
+                updatePromptText(clickedPropertyId);
 
                 // Update active states
                 document.querySelectorAll('.small-image').forEach(img => {
@@ -629,6 +713,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideTextDisplay(label);
             }
         });
+    }
+
+    // Update prompt text for the last image when switching properties
+    function updatePromptText(propertyId) {
+        const lastImageWrapper = document.getElementById(`property-${propertyId}-image-4`);
+        if (lastImageWrapper) {
+            const promptBox = lastImageWrapper.querySelector('.prompt-text-box');
+            if (promptBox) {
+                const promptText = promptBox.querySelector('.prompt-text');
+                if (promptText && propertyData[propertyId]) {
+                    promptText.textContent = propertyData[propertyId].promptText;
+                }
+            }
+        }
     }
 
     // Reset to initial state

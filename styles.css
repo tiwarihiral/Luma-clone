@@ -24,6 +24,7 @@ body.light-background {
     width: 100%;
     min-height: 100vh;
     position: relative;
+    overflow-x: hidden;
 }
 
 
@@ -51,7 +52,7 @@ body.light-background {
 /* Main heading text above the small images */
 .images-heading {
     position: fixed;
-    top: calc(55% - 300px);
+    top: calc(55% - 305px);
     left: 50%;
     transform: translateX(-50%);
     color: #000;
@@ -506,7 +507,7 @@ body.scrolled-state .images-paragraph {
 
 .girl-image.scrolled {
     transform: translate(-50%) scale(0.5);
-    bottom: -150px;
+    bottom: -200px;
 }
 
 .girl-image.slide-down {
@@ -541,6 +542,8 @@ body.scrolled-state .images-paragraph {
     perspective: 1000px;
     pointer-events: none;
     overflow: hidden;
+    z-index: 1000;
+    display: block;
 }
 
 /* Wrapper for individual property images */
@@ -555,6 +558,7 @@ body.scrolled-state .images-paragraph {
     transform: translate(-50%, -50%) translateZ(-1000px) rotateY(0deg) rotateX(0deg);
     transition: transform 1s ease-out, opacity 0.8s ease-out;
     pointer-events: none;
+    z-index: 1000;
 }
 
 /* Show state for property images */
@@ -590,6 +594,69 @@ body.scrolled-state .images-paragraph {
     pointer-events: none;
 }
 
+/* Prompt text box for last image */
+.prompt-text-box {
+    position: absolute;
+    bottom: 85px;
+    left: calc(50% - 155px);
+    width: calc(75% - 60px);
+    max-width: 180px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 30px;
+    min-height: 30px;
+}
+
+.prompt-text-box.visible {
+    opacity: 1;
+}
+
+.prompt-text {
+    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-right: 8px;
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.send-button {
+    width: 24px;
+    height: 24px;
+    background: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.send-button:hover {
+    transform: scale(1.05);
+}
+
+.send-icon {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+}
+
 /* Flying image animation */
 .flying-image {
     position: fixed;
@@ -607,7 +674,10 @@ body.scrolled-state .images-paragraph {
 
 /* Spacer to enable scrolling */
 .scroll-spacer {
-    min-height: 6000px;
+    min-height: 12000px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -668,10 +738,11 @@ body.scrolled-state .images-paragraph {
     display: flex;
     align-items: center;
     gap:15px;
-    opacity: 1; /* Make sure it shows */
-    pointer-events: auto;
+    opacity: 0; /* Hidden initially */
+    pointer-events: none;
     flex-wrap: wrap;
     font-size: clamp(0.8rem, 2vw, 1.2rem);
+    transition: opacity 0.3s ease;
 }
 
 
@@ -990,6 +1061,8 @@ body.scrolled-state .website-name {
     text-align: left;
     pointer-events: none;
     margin-top: 40px;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .property-side-text .side-heading, .property-side-text .side-heading * {
@@ -1042,6 +1115,7 @@ body.scrolled-state .website-name {
 
 .small-images-container.sticky-row ~ .property-side-text {
     display: block;
+    opacity: 1;
     animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1064,15 +1138,6 @@ body.scrolled-state .website-name {
       font-style: normal;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 200vh; /* enough height to scroll */
-      width: 100%;
-      background: black;
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
-    }
 
     .hero {
       display: flex;
