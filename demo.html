@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luma AI - Live Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&display=swap" rel="stylesheet">
+    <style>
+        .demo-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .demo-header {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .demo-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .demo-header p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .demo-sections {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 40px 0;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .demo-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .demo-section p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .interactive-demo {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .prompt-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .prompt-input::placeholder {
+            color: #999;
+        }
+
+        .generate-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .demo-result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-result.loading {
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .feature-item h4 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        @media (max-width: 768px) {
+            .demo-header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .back-btn {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        
+        <div class="demo-header">
+            <h1>Luma AI Live Demo</h1>
+            <p>Experience the power of AI-driven image and video generation. Try out our interactive features below.</p>
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <p style="margin: 0; font-size: 14px; color: #ccc;">
+                    <strong>💡 Try these keywords:</strong> nature, forest, mountain, ocean, sunset, cat, dog, bird, lion, robot, cyberpunk, space, futuristic, art, painting, abstract, creative, dragon, magic, fantasy, wizard, city, street, modern, food, cake, coffee
+                </p>
+            </div>
+        </div>
+
+        <div class="demo-sections">
+            <div class="demo-section">
+                <h3>🎨 Image Generation</h3>
+                <p>Create stunning images with simple text prompts. Our AI understands natural language and brings your ideas to life.</p>
+                <div class="interactive-demo">
+                    <input type="text" class="prompt-input" placeholder="Describe the image you want to create..." id="imagePrompt">
+                    <button class="generate-btn" onclick="generateImage()">Generate Image</button>
+                    <div class="demo-result" id="imageResult">
+                        <p>Enter a prompt and click generate to see the magic!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>🎬 Video Creation</h3>
+                <p>Transform your ideas into dynamic videos. Start with a frame and let AI extend your vision.</p>
+                <div class="interactive-demo">
+                    <input type="text" class="prompt-input" placeholder="Describe your video scene..." id="videoPrompt">
+                    <button class="generate-btn" onclick="generateVideo()">Create Video</button>
+                    <div class="demo-result" id="videoResult">
+                        <p>Describe your video and watch it come to life!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>🔄 Image Editing</h3>
+                <p>Modify existing images with natural language. Change colors, add elements, or transform scenes.</p>
+                <div class="interactive-demo">
+                    <input type="text" class="prompt-input" placeholder="Describe the changes you want..." id="editPrompt">
+                    <button class="generate-btn" onclick="editImage()">Apply Changes</button>
+                    <div class="demo-result" id="editResult">
+                        <p>Tell us what to change and see the transformation!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h3>💡 AI Features</h3>
+                <p>Explore our advanced AI capabilities designed to enhance your creative workflow.</p>
+                <div class="feature-grid">
+                    <div class="feature-item" onclick="showFeature('brainstorm')">
+                        <h4>Brainstorm</h4>
+                        <p>Get creative ideas</p>
+                    </div>
+                    <div class="feature-item" onclick="showFeature('reference')">
+                        <h4>Reference</h4>
+                        <p>Use visual references</p>
+                    </div>
+                    <div class="feature-item" onclick="showFeature('remix')">
+                        <h4>Remix</h4>
+                        <p>Create variations</p>
+                    </div>
+                    <div class="feature-item" onclick="showFeature('share')">
+                        <h4>Share</h4>
+                        <p>Share your creations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AI Training Data - Keywords and their associated responses
+        const aiTrainingData = {
+            // Nature and landscapes
+            'nature': {
+                image: 'A serene landscape with rolling hills, vibrant green trees, and a crystal-clear lake reflecting the sky. Soft golden sunlight filters through the clouds.',
+                video: 'A time-lapse of a forest awakening at dawn, with mist rising from the ground and birds taking flight.',
+                edit: 'Enhanced the natural colors, added golden hour lighting, and increased the depth of field for a more cinematic look.'
+            },
+            'forest': {
+                image: 'A dense, mystical forest with tall trees creating a natural canopy. Sunbeams pierce through the leaves, creating magical light rays.',
+                video: 'A peaceful walk through an ancient forest, with leaves rustling and wildlife moving in the background.',
+                edit: 'Applied a warm, earthy color palette and added atmospheric fog for depth.'
+            },
+            'mountain': {
+                image: 'Majestic snow-capped mountains against a dramatic sky, with rocky peaks reaching into the clouds.',
+                video: 'Aerial footage soaring over mountain ranges, capturing the grandeur of nature\'s peaks.',
+                edit: 'Enhanced the contrast between snow and rock, added dramatic cloud formations.'
+            },
+            'ocean': {
+                image: 'A vast ocean with waves crashing against rocky cliffs, seagulls soaring overhead in a golden sunset.',
+                video: 'Waves rhythmically hitting the shore, with the tide coming in and out in a mesmerizing pattern.',
+                edit: 'Intensified the blue tones, added foam details to the waves, enhanced the sunset colors.'
+            },
+            'sunset': {
+                image: 'A breathtaking sunset over the horizon, with vibrant oranges, pinks, and purples painting the sky.',
+                video: 'The sun slowly setting behind mountains, casting long shadows and creating a golden hour atmosphere.',
+                edit: 'Enhanced the warm color palette, added lens flare effects, and increased the dramatic sky contrast.'
+            },
+            
+            // Animals and wildlife
+            'cat': {
+                image: 'A majestic cat sitting regally, with piercing eyes and luxurious fur, in a cozy home environment.',
+                video: 'A playful cat chasing a laser pointer, with graceful movements and curious expressions.',
+                edit: 'Enhanced the fur texture, brightened the eyes, and added warm lighting to create a cozy atmosphere.'
+            },
+            'dog': {
+                image: 'A happy dog with a wagging tail, running through a field of flowers with pure joy.',
+                video: 'A loyal dog playing fetch in a park, with energetic movements and pure happiness.',
+                edit: 'Brightened the expression, enhanced the fur details, and added a warm, joyful color palette.'
+            },
+            'bird': {
+                image: 'A colorful bird perched on a branch, with vibrant feathers and a curious expression.',
+                video: 'A bird taking flight from a tree, with graceful wing movements and natural flight patterns.',
+                edit: 'Enhanced the feather details, brightened the colors, and added natural lighting.'
+            },
+            'lion': {
+                image: 'A powerful lion with a magnificent mane, standing proudly in the African savanna.',
+                video: 'A lion\'s majestic walk through tall grass, with regal movements and natural behavior.',
+                edit: 'Enhanced the mane texture, intensified the golden colors, and added dramatic lighting.'
+            },
+            
+            // Technology and futuristic
+            'robot': {
+                image: 'A sleek, futuristic robot with glowing blue eyes and metallic surfaces, in a high-tech laboratory.',
+                video: 'A robot performing precise movements, with smooth mechanical motions and glowing elements.',
+                edit: 'Enhanced the metallic reflections, intensified the glowing elements, and added futuristic lighting.'
+            },
+            'cyberpunk': {
+                image: 'A neon-lit cityscape with towering buildings, flying cars, and vibrant purple and blue lighting.',
+                video: 'A cyberpunk city at night, with neon signs flickering and futuristic vehicles flying overhead.',
+                edit: 'Enhanced the neon glow, intensified the cyberpunk color palette, and added atmospheric fog.'
+            },
+            'space': {
+                image: 'A stunning view of Earth from space, with swirling clouds and the vastness of the cosmos.',
+                video: 'A journey through space, passing by planets and stars in a mesmerizing cosmic dance.',
+                edit: 'Enhanced the cosmic colors, added star field details, and intensified the planetary atmospheres.'
+            },
+            'futuristic': {
+                image: 'A sleek, minimalist future city with clean lines, floating structures, and advanced technology.',
+                video: 'A futuristic transportation system with flying vehicles and holographic displays.',
+                edit: 'Enhanced the clean aesthetic, intensified the futuristic lighting, and added holographic effects.'
+            },
+            
+            // Art and creative
+            'art': {
+                image: 'A vibrant abstract painting with bold colors and dynamic brushstrokes, expressing pure creativity.',
+                video: 'An artist\'s hand creating a masterpiece, with paint flowing and colors blending beautifully.',
+                edit: 'Enhanced the color vibrancy, intensified the brushstroke textures, and added artistic lighting.'
+            },
+            'painting': {
+                image: 'A classical oil painting with rich textures and warm colors, depicting a timeless scene.',
+                video: 'A time-lapse of a painting being created, with each brushstroke adding to the masterpiece.',
+                edit: 'Enhanced the paint textures, intensified the classical color palette, and added gallery lighting.'
+            },
+            'abstract': {
+                image: 'A mesmerizing abstract composition with flowing shapes, vibrant colors, and dynamic movement.',
+                video: 'Abstract forms morphing and transforming, creating a hypnotic visual experience.',
+                edit: 'Enhanced the color transitions, intensified the abstract patterns, and added dynamic lighting.'
+            },
+            'creative': {
+                image: 'A burst of creative energy with colorful explosions, floating ideas, and artistic elements.',
+                video: 'Creative concepts coming to life, with ideas flowing and transforming into reality.',
+                edit: 'Enhanced the creative energy, intensified the color explosions, and added artistic effects.'
+            },
+            
+            // Fantasy and magical
+            'dragon': {
+                image: 'A magnificent dragon with scales glistening in the sunlight, breathing fire and soaring through clouds.',
+                video: 'A dragon flying through a mystical landscape, with fire breath and majestic wing movements.',
+                edit: 'Enhanced the scale details, intensified the fire effects, and added magical lighting.'
+            },
+            'magic': {
+                image: 'Sparkling magical energy with floating orbs, mystical symbols, and ethereal light effects.',
+                video: 'Magic spells being cast, with energy flowing and mystical elements dancing in the air.',
+                edit: 'Enhanced the magical glow, intensified the sparkle effects, and added ethereal lighting.'
+            },
+            'fantasy': {
+                image: 'A mystical fantasy world with floating islands, magical creatures, and enchanted forests.',
+                video: 'A journey through a fantasy realm, with magical portals and mystical landscapes.',
+                edit: 'Enhanced the fantasy elements, intensified the magical colors, and added mystical lighting.'
+            },
+            'wizard': {
+                image: 'A wise wizard with flowing robes, casting spells with magical energy swirling around.',
+                video: 'A wizard performing powerful magic, with energy flowing and mystical effects.',
+                edit: 'Enhanced the magical effects, intensified the robe details, and added mystical lighting.'
+            },
+            
+            // Urban and modern
+            'city': {
+                image: 'A bustling modern city with towering skyscrapers, busy streets, and vibrant urban life.',
+                video: 'A time-lapse of city life, with people moving, traffic flowing, and urban energy.',
+                edit: 'Enhanced the urban details, intensified the city lights, and added dynamic lighting.'
+            },
+            'street': {
+                image: 'A vibrant street scene with colorful buildings, street art, and diverse urban culture.',
+                video: 'A walk through a lively street, capturing the energy and diversity of urban life.',
+                edit: 'Enhanced the street details, intensified the urban colors, and added street lighting.'
+            },
+            'modern': {
+                image: 'A sleek modern interior with clean lines, minimalist design, and contemporary aesthetics.',
+                video: 'A modern lifestyle scene, with smooth movements and contemporary design elements.',
+                edit: 'Enhanced the modern aesthetic, intensified the clean lighting, and added contemporary effects.'
+            },
+            
+            // Food and culinary
+            'food': {
+                image: 'A delicious gourmet meal with vibrant colors, artistic plating, and mouth-watering presentation.',
+                video: 'A cooking process, with ingredients being prepared and transformed into a beautiful dish.',
+                edit: 'Enhanced the food colors, intensified the plating details, and added appetizing lighting.'
+            },
+            'cake': {
+                image: 'A beautifully decorated cake with intricate frosting, colorful decorations, and celebration elements.',
+                video: 'A cake being decorated, with frosting being applied and decorations being added.',
+                edit: 'Enhanced the frosting details, intensified the decoration colors, and added celebratory lighting.'
+            },
+            'coffee': {
+                image: 'A perfect cup of coffee with rich brown tones, steam rising, and cozy café atmosphere.',
+                video: 'Coffee being brewed, with steam rising and the rich aroma filling the air.',
+                edit: 'Enhanced the coffee tones, intensified the steam effects, and added warm café lighting.'
+            }
+        };
+
+        // Function to find the best matching keyword from user input
+        function findBestMatch(userInput) {
+            const input = userInput.toLowerCase();
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const keyword in aiTrainingData) {
+                if (input.includes(keyword)) {
+                    const score = keyword.length; // Longer keywords get higher priority
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = keyword;
+                    }
+                }
+            }
+
+            // If no exact match, try partial matches
+            if (!bestMatch) {
+                for (const keyword in aiTrainingData) {
+                    if (keyword.includes(input) || input.includes(keyword)) {
+                        bestMatch = keyword;
+                        break;
+                    }
+                }
+            }
+
+            return bestMatch;
+        }
+
+        // Function to generate a response based on user input
+        function generateResponse(userInput, type) {
+            const match = findBestMatch(userInput);
+            
+            if (match && aiTrainingData[match]) {
+                return aiTrainingData[match][type];
+            }
+            
+            // Default responses for unmatched inputs
+            const defaultResponses = {
+                image: `A beautiful ${userInput} scene with stunning details and perfect composition. The lighting creates a magical atmosphere that brings the ${userInput} to life.`,
+                video: `A captivating ${userInput} video with smooth camera movements and dynamic storytelling. The scene unfolds naturally, capturing the essence of ${userInput}.`,
+                edit: `Enhanced the ${userInput} with improved lighting, color correction, and artistic effects. The final result showcases the beauty and detail of the ${userInput}.`
+            };
+            
+            return defaultResponses[type];
+        }
+
+        function generateImage() {
+            const prompt = document.getElementById('imagePrompt').value;
+            const result = document.getElementById('imageResult');
+            
+            if (!prompt.trim()) {
+                alert('Please enter a prompt first!');
+                return;
+            }
+
+            result.innerHTML = '<p>Analyzing prompt and generating image...</p>';
+            result.classList.add('loading');
+
+            setTimeout(() => {
+                result.classList.remove('loading');
+                const response = generateResponse(prompt, 'image');
+                result.innerHTML = `
+                    <div style="text-align: center;">
+                        <p style="color: #4CAF50; margin-bottom: 10px;">✨ Image Generated Successfully!</p>
+                        <p style="font-size: 14px; color: #ccc; line-height: 1.6; text-align: left;">${response}</p>
+                        <p style="font-size: 12px; color: #999; margin-top: 10px;">Prompt: "${prompt}"</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function generateVideo() {
+            const prompt = document.getElementById('videoPrompt').value;
+            const result = document.getElementById('videoResult');
+            
+            if (!prompt.trim()) {
+                alert('Please enter a prompt first!');
+                return;
+            }
+
+            result.innerHTML = '<p>Processing video concept and creating animation...</p>';
+            result.classList.add('loading');
+
+            setTimeout(() => {
+                result.classList.remove('loading');
+                const response = generateResponse(prompt, 'video');
+                result.innerHTML = `
+                    <div style="text-align: center;">
+                        <p style="color: #4CAF50; margin-bottom: 10px;">🎬 Video Created Successfully!</p>
+                        <p style="font-size: 14px; color: #ccc; line-height: 1.6; text-align: left;">${response}</p>
+                        <p style="font-size: 12px; color: #999; margin-top: 10px;">Prompt: "${prompt}"</p>
+                    </div>
+                `;
+            }, 3000);
+        }
+
+        function editImage() {
+            const prompt = document.getElementById('editPrompt').value;
+            const result = document.getElementById('editResult');
+            
+            if (!prompt.trim()) {
+                alert('Please enter edit instructions first!');
+                return;
+            }
+
+            result.innerHTML = '<p>Applying AI-powered edits and enhancements...</p>';
+            result.classList.add('loading');
+
+            setTimeout(() => {
+                result.classList.remove('loading');
+                const response = generateResponse(prompt, 'edit');
+                result.innerHTML = `
+                    <div style="text-align: center;">
+                        <p style="color: #4CAF50; margin-bottom: 10px;">🔄 Image Edited Successfully!</p>
+                        <p style="font-size: 14px; color: #ccc; line-height: 1.6; text-align: left;">${response}</p>
+                        <p style="font-size: 12px; color: #999; margin-top: 10px;">Changes: "${prompt}"</p>
+                    </div>
+                `;
+            }, 2500);
+        }
+
+        function showFeature(feature) {
+            const features = {
+                brainstorm: {
+                    title: 'Brainstorm Mode',
+                    description: 'AI-powered idea generation to spark your creativity. Get endless inspiration for your next project.',
+                    icon: '💡'
+                },
+                reference: {
+                    title: 'Reference Mode',
+                    description: 'Upload images or provide visual references to guide AI generation. Make it exactly how you envision.',
+                    icon: '🖼️'
+                },
+                remix: {
+                    title: 'Remix Mode',
+                    description: 'Create variations and explore different styles. Transform your creations with new perspectives.',
+                    icon: '🔄'
+                },
+                share: {
+                    title: 'Share Mode',
+                    description: 'Share your creations with the community. Get inspired by others and showcase your work.',
+                    icon: '📤'
+                }
+            };
+
+            const featureInfo = features[feature];
+            alert(`${featureInfo.icon} ${featureInfo.title}\n\n${featureInfo.description}\n\nThis feature would be fully functional in the actual application.`);
+        }
+
+        // Add some interactive effects
+        document.querySelectorAll('.feature-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        document.getElementById('imagePrompt').focus();
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        document.getElementById('videoPrompt').focus();
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        document.getElementById('editPrompt').focus();
+                        break;
+                }
+            }
+        });
+
+        // Add auto-suggestions for common prompts
+        const commonPrompts = [
+            'A majestic dragon flying over mountains',
+            'A cyberpunk city at night',
+            'A peaceful forest with sunlight',
+            'A futuristic robot in a laboratory',
+            'A magical wizard casting spells',
+            'A beautiful sunset over the ocean',
+            'A modern city skyline',
+            'An abstract art composition',
+            'A cute cat playing with toys',
+            'A delicious cake with decorations'
+        ];
+
+        // Add click-to-fill functionality for demo prompts
+        function addDemoPrompts() {
+            const sections = document.querySelectorAll('.demo-section');
+            sections.forEach((section, index) => {
+                if (index < 3) { // Only for the first 3 sections
+                    const input = section.querySelector('.prompt-input');
+                    const button = section.querySelector('.generate-btn');
+                    
+                    // Add a demo prompt button
+                    const demoBtn = document.createElement('button');
+                    demoBtn.textContent = '🎲 Try Demo';
+                    demoBtn.style.cssText = `
+                        background: rgba(255,255,255,0.2);
+                        color: white;
+                        border: 1px solid rgba(255,255,255,0.3);
+                        padding: 8px 15px;
+                        border-radius: 15px;
+                        margin-left: 10px;
+                        cursor: pointer;
+                        font-size: 12px;
+                        transition: all 0.3s ease;
+                    `;
+                    
+                    demoBtn.addEventListener('mouseenter', function() {
+                        this.style.background = 'rgba(255,255,255,0.3)';
+                    });
+                    
+                    demoBtn.addEventListener('mouseleave', function() {
+                        this.style.background = 'rgba(255,255,255,0.2)';
+                    });
+                    
+                    demoBtn.addEventListener('click', function() {
+                        const randomPrompt = commonPrompts[Math.floor(Math.random() * commonPrompts.length)];
+                        input.value = randomPrompt;
+                        button.click();
+                    });
+                    
+                    button.parentNode.insertBefore(demoBtn, button.nextSibling);
+                }
+            });
+        }
+
+        // Initialize demo prompts when page loads
+        window.addEventListener('load', addDemoPrompts);
+
+        // Add a counter for successful generations
+        let generationCount = 0;
+        const originalGenerateImage = generateImage;
+        const originalGenerateVideo = generateVideo;
+        const originalEditImage = editImage;
+
+        function updateGenerationCount() {
+            generationCount++;
+            const header = document.querySelector('.demo-header h1');
+            if (generationCount === 1) {
+                header.innerHTML = 'Luma AI Live Demo <span style="font-size: 0.5em; color: #4CAF50;">✨ 1 Generation</span>';
+            } else {
+                header.innerHTML = `Luma AI Live Demo <span style="font-size: 0.5em; color: #4CAF50;">✨ ${generationCount} Generations</span>`;
+            }
+        }
+
+        // Override the original functions to add counter
+        window.generateImage = function() {
+            originalGenerateImage();
+            setTimeout(updateGenerationCount, 2500);
+        };
+
+        window.generateVideo = function() {
+            originalGenerateVideo();
+            setTimeout(updateGenerationCount, 3500);
+        };
+
+        window.editImage = function() {
+            originalEditImage();
+            setTimeout(updateGenerationCount, 3000);
+        };
+    </script>
+</body>
+</html> 

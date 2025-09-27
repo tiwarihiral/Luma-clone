@@ -1,0 +1,154 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    /* Animated gradient background */
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.container {
+    max-width: 400px;
+    margin: 60px auto;
+    background: rgba(255,255,255,0.92);
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    padding: 32px 24px 24px 24px;
+    text-align: center;
+    backdrop-filter: blur(2px);
+}
+h1, h2 {
+    margin-bottom: 16px;
+    color: #222;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+.btn {
+    display: inline-block;
+    background: #4f8cff;
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover {
+    background: #2563eb;
+}
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+.auth-form label {
+    text-align: left;
+    font-size: 0.98rem;
+    color: #444;
+}
+.auth-form input {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.auth-form button {
+    margin-top: 12px;
+}
+p {
+    margin-top: 18px;
+    color: #555;
+    font-size: 0.98rem;
+}
+a {
+    color: #4f8cff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #222;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    gap: 10px;
+}
+.social-btn .icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 8px;
+}
+.google-btn {
+    border: 1px solid #4285f4;
+    color: #4285f4;
+    background: #fff;
+}
+.google-btn:hover {
+    background: #e8f0fe;
+}
+.facebook-btn {
+    border: 1px solid #1877f3;
+    color: #fff;
+    background: #1877f3;
+}
+.facebook-btn:hover {
+    background: #145db2;
+}
+.facebook-btn .icon {
+    margin-right: 8px;
+}
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 18px 0 10px 0;
+}
+.separator span {
+    background: #fff;
+    padding: 0 12px;
+    color: #888;
+    font-size: 0.98rem;
+}
+.separator:before, .separator:after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+}
+.separator:before {
+    margin-right: 8px;
+}
+.separator:after {
+    margin-left: 8px;
+} 
