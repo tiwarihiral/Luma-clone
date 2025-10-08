@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aigetai Private Limited - Careers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #f7f7f7; /* Match body background */
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 0; /* Remove previous margin */
+            font-weight: bold;
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+        .logo img {
+            height: 40px; /* Adjust as needed */
+        }
+        .mission-section,
+        .why-join-section,
+        .what-we-value-section {
+            margin-bottom: 50px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .mission-section h2,
+        .why-join-section h2,
+        .what-we-value-section h2,
+        .job-category {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        /* Ensure padding-left for job-category, but remove for mission/why-join/what-we-value h2 to match images */
+        .job-category {
+            padding-left: 20px;
+        }
+        .mission-section h2,
+        .why-join-section h2,
+        .what-we-value-section h2 {
+            padding-left: 0;
+        }
+        .mission-section p,
+        .why-join-section ul,
+        .what-we-value-section ul {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .mission-section p:first-of-type {
+            margin-bottom: 30px;
+        }
+        .mission-section a {
+            color: #007bff;
+            text-decoration: underline; /* Always underlined */
+            font-weight: 500;
+        }
+        .mission-section a:hover {
+            text-decoration: underline;
+        }
+        .job-section {
+            margin-bottom: 40px;
+        }
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .filters select {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #555;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16.1%208.1-3.8%204.9-4.9%2011-3.6%2017.3l128%20192c3.7%205.6%209.7%208.7%2016.1%208.7s12.4-3.1%2016.1-8.7l128-192c1.2-6.3.1-12.4-3.6-17.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .filters select:focus {
+            outline: 2px solid #333;
+            border: 1px solid #333;
+        }
+        .job-listing {
+            background-color: #fff;
+            padding: 24px 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15); /* Slightly more visible default shadow */
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .job-listing:hover {
+            background-color: #e6f7ff; /* Light blue background on hover */
+            transform: translateY(-3px); /* Subtle lift effect on hover */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* More pronounced shadow on hover */
+            text-decoration: none; /* Ensure no underline on hover */
+        }
+        .job-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .job-details {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.4;
+        }
+        .job-salary {
+            font-size: 15px;
+            color: #777;
+            margin-top: 5px;
+        }
+        .footer {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer-links a {
+            color: #777;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .ashby-logo {
+            font-weight: bold;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .page-header {
+                padding: 15px;
+            }
+            .logo img {
+                height: 30px;
+            }
+            .mission-section h2,
+            .why-join-section h2,
+            .what-we-value-section h2,
+            .job-category {
+                font-size: 20px;
+                margin-bottom: 20px;
+                padding-left: 0;
+            }
+            .mission-section p,
+            .why-join-section ul,
+            .what-we-value-section ul {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            .filters {
+                flex-direction: column;
+                gap: 10px;
+                padding: 0;
+            }
+            .filters select {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .job-listing {
+                padding: 18px 12px;
+                margin-bottom: 12px;
+            }
+            .job-title {
+                font-size: 18px;
+            }
+            .job-details,
+            .job-salary {
+                font-size: 14px;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+                font-size: 12px;
+                text-align: center;
+            }
+            .footer-links a {
+                margin: 0 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo">
+            AIGETAI
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="mission-section">
+            <h2>Our mission is to build multimodal AI to expand human imagination and capabilities.</h2>
+            <p>
+                We believe that multimodality is critical for intelligence. To go beyond language
+                models and build more aware, capable and useful systems, the next step function
+                change will come from vision. So, we are working on training and scaling up
+                multimodal foundation models for systems that can see and understand, show and
+                explain, and eventually interact with our world to effect change.
+            </p>
+            <p>
+                We will deploy these systems to make a new kind of intelligent creative partner that
+                can imagine with us. Free and away from the pressure of being creative. It's for all of
+                us whose imaginations have been constrained, who've had to channel vivid dreams
+                through broken words, hoping others will see what we see in our mind's eye. A partner
+                that can help us show — not just tell.
+            </p>
+            <p>
+                Our AI platform is an early step to building that. <a href="#">Try it here</a>.
+            </p>
+        </div>
+
+        <div class="why-join-section">
+            <h2>Why you should join us:</h2>
+            <ul>
+                <li>Aigetai Private Limited is bringing together the best team in the world to achieve our goal, from researchers to engineers and designers to growth operators</li>
+                <li>Aigetai Private Limited is not just a lab - we are deeply product focused and our vision merging AI models and delightful products is unique in the industry</li>
+                <li>We build. We ship. Our early products have been wildly successful</li>
+            </ul>
+        </div>
+
+        <div class="what-we-value-section">
+            <h2>What do we value?</h2>
+            <ul>
+                <li>Expertise in your field</li>
+                <li>Urgency, velocity and execution</li>
+                <li>Problem solving mindset</li>
+                <li>Clear communication</li>
+                <li>Product focus</li>
+            </ul>
+        </div>
+
+        <div class="job-section">
+            <h2 class="job-category">Open Positions (33)</h2>
+            <div class="filters">
+                <select>
+                    <option>Department</option>
+                    <option>All Departments</option>
+                    <option>Business Operations</option>
+                    <option>GTM</option>
+                    <option>Product Engineering</option>
+                    <option>Research & Applied Research</option>
+                    <option>Talent Community</option>
+                </select>
+                <select>
+                    <option>Location</option>
+                    <option>All Locations</option>
+                    <option>New York, NY</option>
+                    <option>Palo Alto, CA</option>
+                    <option>Remote</option>
+                </select>
+                <select>
+                    <option>Employment Type</option>
+                    <option>All Employment Types</option>
+                    <option>Full time</option>
+                </select>
+            </div>
+
+            <h2 class="job-category">Business Operations</h2>
+            <a href="compensation-analyst.html" class="job-listing">
+                <div class="job-title">Compensation Analyst</div>
+                <div class="job-details">Business Operations • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="data-scientist.html" class="job-listing">
+                <div class="job-title">Data Scientist</div>
+                <div class="job-details">Business Operations • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="recruiter-gtm.html" class="job-listing">
+                <div class="job-title">Recruiter - GTM</div>
+                <div class="job-details">People & Talent • San Francisco, CA • Full time • Hybrid</div>
+            </a>
+            <a href="recruiter-product-engineering.html" class="job-listing">
+                <div class="job-title">Recruiter - Product & Engineering</div>
+                <div class="job-details">People & Talent • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="sr-manager-people-operations.html" class="job-listing">
+                <div class="job-title">Sr Manager, People Operations</div>
+                <div class="job-details">People & Talent • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+        </div>
+
+        <div class="job-section">
+            <h2 class="job-category">GTM</h2>
+            <a href="account-executive-advertising.html" class="job-listing">
+                <div class="job-title">Account Executive – Advertising</div>
+                <div class="job-details">GTM • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="account-executive-brands.html" class="job-listing">
+                <div class="job-title">Account Executive – Brands</div>
+                <div class="job-details">GTM • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="account-executive-entertainment.html" class="job-listing">
+                <div class="job-title">Account Executive – Entertainment</div>
+                <div class="job-details">GTM • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="business-development-strategic-partnerships.html" class="job-listing">
+                <div class="job-title">Business Development and Strategic Partnerships</div>
+                <div class="job-details">GTM • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="business-development-executive-agency-partnerships.html" class="job-listing">
+                <div class="job-title">Business Development Executive – Agency Partnerships</div>
+                <div class="job-details">GTM • New York, NY • Full time • Hybrid</div>
+            </a>
+            <a href="business-development-executive-brand-partnerships.html" class="job-listing">
+                <div class="job-title">Business Development Executive – Brand Partnerships</div>
+                <div class="job-details">GTM • New York, NY • Full time • Hybrid</div>
+            </a>
+            <a href="growth-marketer.html" class="job-listing">
+                <div class="job-title">Growth Marketer</div>
+                <div class="job-details">GTM • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+        </div>
+
+        <div class="job-section">
+            <h2 class="job-category">Product Engineering</h2>
+            <a href="ai-agent-engineer.html" class="job-listing">
+                <div class="job-title">AI Agent Engineer</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="brand-designer.html" class="job-listing">
+                <div class="job-title">Brand Designer</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="distributed-systems-engineer.html" class="job-listing">
+                <div class="job-title">Distributed Systems Engineer</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="product-designer.html" class="job-listing">
+                <div class="job-title">Product Designer</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="product-manager.html" class="job-listing">
+                <div class="job-title">Product Manager</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="software-engineer-backend.html" class="job-listing">
+                <div class="job-title">Software Engineer - Backend</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="software-engineer-data-infrastructure.html" class="job-listing">
+                <div class="job-title">Software Engineer - Data Infrastructure</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="software-engineer-frontend-ui.html" class="job-listing">
+                <div class="job-title">Software Engineer - Frontend UI</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="software-engineer-ios.html" class="job-listing">
+                <div class="job-title">Software Engineer - iOS</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="software-engineer-product.html" class="job-listing">
+                <div class="job-title">Software Engineer - Product</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+                <div class="job-salary">$220K - $280K • Offers Equity</div>
+            </a>
+            <a href="software-engineer-reliability.html" class="job-listing">
+                <div class="job-title">Software Engineer - Reliability</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="software-engineer-test-automation-qa.html" class="job-listing">
+                <div class="job-title">Software Engineer - Test Automation & QA</div>
+                <div class="job-details">Product Engineering • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+        </div>
+
+        <div class="job-section">
+            <h2 class="job-category">Research & Applied Research</h2>
+            <a href="ai-tooling-engineer.html" class="job-listing">
+                <div class="job-title">AI Tooling Engineer</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="hpc-engineer-research-infrastructure.html" class="job-listing">
+                <div class="job-title">HPC Engineer - Research Infrastructure</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-engineer-applied-research.html" class="job-listing">
+                <div class="job-title">Research Engineer - Applied Research</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-engineer-computer-vision.html" class="job-listing">
+                <div class="job-title">Research Engineer - Computer Vision</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-engineer-foundation-models.html" class="job-listing">
+                <div class="job-title">Research Engineer - Foundation Models</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-engineer-multimodal-language-models.html" class="job-listing">
+                <div class="job-title">Research Engineer - Multimodal Language Models</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-engineer-performance-optimization.html" class="job-listing">
+                <div class="job-title">Research Engineer - Performance Optimization</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-engineer-training-efficiency.html" class="job-listing">
+                <div class="job-title">Research Engineer - Training Efficiency</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+                <div class="job-salary">$220K - $300K</div>
+            </a>
+            <a href="research-scientist.html" class="job-listing">
+                <div class="job-title">Research Scientist</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="research-scientist-multimodal-language-models.html" class="job-listing">
+                <div class="job-title">Research Scientist - Multimodal Language Models</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+            <a href="senior-machine-learning-engineer-hardware-abstractions.html" class="job-listing">
+                <div class="job-title">Senior Machine Learning Engineer - Hardware Abstractions & Performance Optimization</div>
+                <div class="job-details">Research & Applied Research • Remote • Full time • Remote</div>
+            </a>
+            <a href="technical-artist-language-prompt-systems.html" class="job-listing">
+                <div class="job-title">Technical Artist - Language & Prompt Systems</div>
+                <div class="job-details">Research & Applied Research • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+        </div>
+
+        <div class="job-section">
+            <h2 class="job-category">Talent Community</h2>
+            <a href="join-aigetai-ai-talent-community.html" class="job-listing">
+                <div class="job-title">Join Aigetai Private Limited Talent Community</div>
+                <div class="job-details">Talent Community • Palo Alto, CA • Full time • Hybrid</div>
+            </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="powered-by">Powered by <span class="ashby-logo">Aigetai</span></div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Security</a>
+            <a href="#">Vulnerability Disclosure</a>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compensation Analyst - Aigetai AI Careers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header .logo {
+            font-weight: bold;
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+        .back-arrow {
+            font-size: 24px;
+            text-decoration: none;
+            color: #555;
+            padding-right: 15px;
+        }
+        .back-arrow:hover {
+            color: #000;
+        }
+        .job-page-container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 0 20px 40px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        .job-details-sidebar {
+            flex: 0 0 250px;
+            padding-top: 20px;
+        }
+        .job-details-sidebar div {
+            margin-bottom: 15px;
+        }
+        .job-details-sidebar .label {
+            font-weight: 500;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .job-details-sidebar .value {
+            font-size: 16px;
+            color: #333;
+        }
+        .job-content {
+            flex: 1;
+            min-width: 400px;
+        }
+        .job-title-main {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #777;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+        .tab-button.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+            font-weight: 500;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content h3 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .tab-content p, .tab-content ul {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .tab-content ul {
+            list-style: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        .tab-content ul li {
+            margin-bottom: 10px;
+        }
+        .tab-content .note {
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .apply-button-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .apply-button {
+            background-color: #6a00ff;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .apply-button:hover {
+            background-color: #5a00e0;
+        }
+        .recaptcha-info {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+        .recaptcha-info a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #333;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #555;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-group .upload-box {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            color: #777;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .form-group .upload-box:hover {
+            border-color: #007bff;
+        }
+        .form-group .upload-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .form-group .upload-button:hover {
+            background-color: #0056b3;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        .form-group label.radio-label {
+            display: inline-block;
+            font-size: 16px;
+            color: #555;
+        }
+        .footer {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer-links a {
+            color: #777;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .ashby-logo {
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px;
+                margin-bottom: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .job-page-container {
+                flex-direction: column;
+                gap: 20px;
+                padding: 0 15px 30px 15px;
+            }
+            .job-details-sidebar {
+                flex: none;
+                width: 100%;
+                padding-top: 0;
+            }
+            .job-title-main {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            .tabs {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            .tab-button {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            .tab-content p, .tab-content ul {
+                font-size: 15px;
+            }
+            .apply-button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            .form-group input, .form-group textarea {
+                width: 100%;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+                font-size: 12px;
+                text-align: center;
+            }
+            .footer-links a {
+                margin: 0 8px;
+            }
+        }
+        .required-star {
+            color: red;
+            margin-left: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="join-us.html" class="back-arrow">&#8592;</a>
+        <div class="logo">AIGETAI</div>
+        <div></div>
+    </div>
+    <div class="job-page-container">
+        <div class="job-details-sidebar">
+            <div class="job-title-main">Compensation Analyst</div>
+            <div>
+                <span class="label">Location</span>
+                <span class="value">Palo Alto, CA</span>
+            </div>
+            <div>
+                <span class="label">Employment Type</span>
+                <span class="value">Full time</span>
+            </div>
+            <div>
+                <span class="label">Location Type</span>
+                <span class="value">Hybrid</span>
+            </div>
+            <div>
+                <span class="label">Department</span>
+                <span class="value">Business Operations</span>
+            </div>
+            <div>
+                <span class="label">Compensation</span>
+                <span class="value">Estimated Base Salary $90K - $145K • Offers Equity</span>
+            </div>
+        </div>
+        <div class="job-content">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'overview')">Overview</button>
+                <button class="tab-button" onclick="openTab(event, 'application')">Application</button>
+            </div>
+            <div id="overview" class="tab-content active">
+                <p>You'll shape the way we reward, motivate, and retain the talented minds building our multimodal AI future. You'll own our compensation strategy, bringing clarity, fairness, and innovation to a critical part of Aigetai's growth journey, working directly alongside leadership, HR, and finance teams.</p>
+                <h3>What a Typical Week Might Look Like</h3>
+                <ul>
+                    <li>Crunching numbers and turning compensation data into actionable insights—your analytics directly influencing hiring and retention decisions.</li>
+                    <li>Collaborating with HR and recruiting teams, guiding them through salary offers and job leveling conversations.</li>
+                    <li>Conducting detailed market analysis using tools like Mercer and Radford to ensure our compensation remains competitive and equitable.</li>
+                    <li>Developing models and scenarios to help leadership visualize compensation strategies aligned with Aigetai's ambitious growth plans.</li>
+                    <li>Updating job architectures and compensation structures as we scale, ensuring fairness and transparency remain core to our values.</li>
+                    <li>Keeping a pulse on market trends and proactively recommending adjustments to stay ahead in a rapidly evolving AI landscape.</li>
+                </ul>
+                <h3>Your Background Looks Something Like</h3>
+                <div style="font-style: italic; color: #666; margin-bottom: 8px;">The Essentials:</div>
+                <ul>
+                    <li>3-5 years in compensation, finance, or analytical roles, ideally in fast-paced tech or startup environments.</li>
+                    <li>Expert-level spreadsheet skills—you love creating pivot tables, complex models, and scenario analyses.</li>
+                    <li>Hands-on experience with salary benchmarking surveys like Mercer, Radford, and Pave.</li>
+                    <li>Strong grasp of equity compensation, private company valuation, and option pricing (e.g., 409A).</li>
+                </ul>
+                <div style="font-style: italic; color: #666; margin-bottom: 8px;">What Would Make You Exceptional:</div>
+                <ul>
+                    <li>Experience using AI tools to automate workflows or enhance compensation analytics.</li>
+                    <li>A knack for translating intricate data insights into clear, compelling narratives for leadership.</li>
+                    <li>Proven comfort navigating ambiguity and fluidly shifting priorities in a startup context.</li>
+                </ul>
+                <h3>You Might Really Thrive Here If…</h3>
+                <ul>
+                    <li>You’re energized by solving complex puzzles—especially ones involving data and human psychology.</li>
+                    <li>You genuinely care about fairness and transparency, and you’re excited to build systems that reflect those values.</li>
+                    <li>You can seamlessly move between deep spreadsheet work and lively discussions about team growth.</li>
+                    <li>You appreciate the fast-paced unpredictability of startups and have the adaptability to match it.</li>
+                    <li>You’re intrigued by how compensation shapes company culture and motivates teams.</li>
+                </ul>
+                <h3>Some of the Cool Things We're Working On</h3>
+                <ul>
+                    <li>Scaling our compensation infrastructure from scratch to support our explosive growth.</li>
+                    <li>Exploring creative approaches to equity and rewards that resonate with a diverse and innovative team.</li>
+                    <li>Leveraging AI-driven tools for more dynamic, predictive compensation insights.</li>
+                    <li>Designing strategies to support and attract global talent in competitive AI markets.</li>
+                    <li>Ensuring our compensation philosophy actively supports and enhances our inclusive company culture.</li>
+                </ul>
+                <div class="about-section">
+                    <div class="about-title">About AIGETAI</div>
+                    <div class="about-text">
+                        At AIGETAI, we're building multimodal AI to expand human imagination and capabilities. We believe the next leap in AI won't come from language alone—but from models that can see, understand, create, and interact with the world visually.<br><br>
+                        Aigetai Studio is just the beginning. We're creating an intelligent creative partner—one that helps people express what's in their mind's eye, without needing the perfect words. Think: generative AI that's not just helpful, but beautifully intuitive and deeply visual.<br><br>
+                        We're product-focused, fast-moving, and shipping like crazy. Our team is small, sharp, and obsessed with building things that feel magical. If that resonates, keep reading.
+                    </div>
+                </div>
+                <div class="apply-button-section">
+                    <a href="#application" class="apply-button" onclick="openTab(event, 'application')">Apply for this Job</a>
+                </div>
+            </div>
+            <div id="application" class="tab-content">
+                <div class="form-group">
+                    <div id="applicationLimitsInfo" style="background-color: #e6f7ff; border-left: 5px solid #007bff; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                        <p style="margin: 0; font-weight: 500; color: #007bff; font-size: 16px;">&#x24D8; This job has application limits</p>
+                        <p style="margin-top: 10px; font-size: 14px; color: #555;">A quick note about applications:</p>
+                        <p style="margin-top: 5px; font-size: 14px; color: #555;">To ensure we can give proper consideration to everyone who's excited about joining Aigetai AI, we have a few gentle guidelines around applications. We ask that you submit no more than 2 applications to any positions across our company within a 30-day period. If you've applied for a specific role and weren't selected, we welcome you to apply again after 90 days as our team and needs evolve.</p>
+                        <p style="margin-top: 5px; font-size: 14px; color: #555;">These guidelines help our recruiting team provide thoughtful responses to everyone. We genuinely appreciate your interest in Aigetai AI and look forward to reviewing your application!</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>&#x25cf; Autofill from resume</label>
+                    <div class="upload-box">
+                        Upload your resume here to autofill key application fields.
+                        <input type="file" id="resumeUpload" style="display: none;">
+                        <button class="upload-button" onclick="document.getElementById('resumeUpload').click()">Upload file</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="resume">Resume<span class="required-star">*</span></label>
+                    <div class="upload-box">
+                        <input type="file" id="resume" style="display: none;">
+                        <span id="resumeFileName">Upload file or drag and drop here</span>
+                        <button class="upload-button" onclick="document.getElementById('resume').click()">Upload file</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name<span class="required-star">*</span></label>
+                    <input type="text" id="name" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email<span class="required-star">*</span></label>
+                    <input type="email" id="email" placeholder="hello@example.com...">
+                </div>
+                <div class="form-group">
+                    <label for="currentLocation">Location</label>
+                    <input type="text" id="currentLocation" placeholder="Start typing...">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" placeholder="1-415-555-1234...">
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn Profile</label>
+                    <input type="text" id="linkedin" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="portfolio">Portfolio/GitHub/personal website</label>
+                    <input type="text" id="portfolio" placeholder="Type here...">
+                </div>
+                <div class="form-group">
+                    <label for="discovery">How did you discover us?</label>
+                    <input type="text" id="discovery" placeholder="Start typing...">
+                </div>
+                <div class="apply-button-section">
+                    <button type="submit" class="apply-button">Submit Application &#x27A4;</button>
+                </div>
+                <div class="recaptcha-info">
+                    This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="powered-by">Powered by <span class="ashby-logo">Aigetai</span></div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Security</a>
+            <a href="#">Vulnerability Disclosure</a>
+        </div>
+    </footer>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const hash = window.location.hash;
+            if (hash) {
+                const tabName = hash.substring(1);
+                const tabButton = document.querySelector(`.tab-button[onclick*='${tabName}']`);
+                if (tabButton) {
+                    tabButton.click();
+                } else {
+                    document.querySelector('.tab-button.active').click();
+                }
+            } else {
+                document.querySelector('.tab-button.active').click();
+            }
+        });
+        document.getElementById('resume').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'Upload file or drag and drop here';
+            document.getElementById('resumeFileName').textContent = fileName;
+        });
+        document.getElementById('resumeUpload').addEventListener('change', function() {
+            var fileName = this.files[0] ? this.files[0].name : 'Upload your resume here to autofill key application fields.';
+            document.querySelector('.form-group .upload-box').childNodes[0].nodeValue = fileName;
+        });
+        document.querySelector('.apply-button-section button[type="submit"]').addEventListener('click', function(event) {
+            event.preventDefault();
+            const errorList = document.getElementById('errorList');
+            const validationErrorsDiv = document.getElementById('validationErrors');
+            errorList.innerHTML = '';
+            validationErrorsDiv.style.display = 'none';
+            let errorsFound = false;
+            const nameInput = document.getElementById('name');
+            if (nameInput.value.trim() === '') {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Name';
+                errorList.appendChild(li);
+            }
+            const emailInput = document.getElementById('email');
+            if (emailInput.value.trim() === '') {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Email';
+                errorList.appendChild(li);
+            }
+            const resumeInput = document.getElementById('resume');
+            if (resumeInput.files.length === 0) {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Resume';
+                errorList.appendChild(li);
+            }
+            const relocateRadios = document.querySelectorAll('input[name="relocate"]');
+            let relocateSelected = false;
+            for (const radio of relocateRadios) {
+                if (radio.checked) {
+                    relocateSelected = true;
+                    break;
+                }
+            }
+            if (!relocateSelected) {
+                errorsFound = true;
+                const li = document.createElement('li');
+                li.textContent = 'Missing entry for required field: Are you able to relocate to the Bay Area?';
+                errorList.appendChild(li);
+            }
+            if (errorsFound) {
+                validationErrorsDiv.style.display = 'block';
+                document.getElementById('application').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert('Form submitted successfully (for demonstration purposes)!');
+            }
+        });
+    </script>
+</body>
+</html> 

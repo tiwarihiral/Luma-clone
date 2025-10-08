@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Aigetai AI Talent Community - AIGETAI Careers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; border-bottom: 1px solid #e1e5e9; position: sticky; top: 0; z-index: 100; }
+        .back-arrow { font-size: 1.5rem; text-decoration: none; color: #333; font-weight: bold; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #333; }
+        .job-page-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+        .job-details-sidebar { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 100px; }
+        .job-title-main { font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; color: #333; }
+        .job-details-sidebar > div { margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .label { font-weight: 500; color: #666; }
+        .value { font-weight: 600; color: #333; }
+        .job-content { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
+        .tabs { display: flex; border-bottom: 1px solid #e1e5e9; }
+        .tab-button { flex: 1; padding: 1rem; border: none; background: none; cursor: pointer; font-size: 1rem; font-weight: 500; color: #666; transition: all 0.3s ease; }
+        .tab-button.active { color: #333; border-bottom: 2px solid #007bff; }
+        .tab-button:hover { background-color: #f8f9fa; }
+        .tab-content { display: none; padding: 2rem; }
+        .tab-content.active { display: block; }
+        .tab-content h3 { margin: 1.5rem 0 1rem 0; color: #333; }
+        .tab-content ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .tab-content li { margin-bottom: 0.5rem; }
+        .note { background: #f8f9fa; padding: 1rem; border-radius: 4px; margin: 1rem 0; font-style: italic; color: #666; }
+        .apply-button-section { text-align: center; margin: 2rem 0; }
+        .apply-button { background-color: #6a00ff; color: #fff; padding: 15px 30px; border: none; border-radius: 8px; font-size: 18px; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease; text-decoration: none; display: inline-block;}
+        .apply-button:hover { background-color: #5a00e0;}
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: inherit; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .radio-group { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer; }
+        .radio-group input[type="radio"] { width: auto; }
+        .required-star { color: #dc3545; }
+        .file-upload { border: 2px dashed #ddd; padding: 2rem; text-align: center; border-radius: 4px; cursor: pointer; transition: border-color 0.3s ease; }
+        .file-upload:hover { border-color: #007bff; }
+        .file-upload input[type="file"] { display: none; }
+        .submit-button { background: #6a00ff; color: white; padding: 1rem 2rem; border: none; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease;}
+        .submit-button:hover { background: #5a00e0;}
+        .footer { text-align: center; padding: 2rem; color: #666; border-top: 1px solid #e1e5e9; margin-top: 2rem; }
+        @media (max-width: 768px) { .job-page-container { grid-template-columns: 1fr; padding: 0 1rem; } .job-details-sidebar { position: static; margin-bottom: 1rem; } .header { padding: 1rem; } .tabs { flex-direction: column; } .tab-button { text-align: left; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="join-us.html" class="back-arrow">&#8592;</a>
+        <div class="logo">AIGETAI</div>
+        <div></div>
+    </div>
+    <div class="job-page-container">
+        <div class="job-details-sidebar">
+            <div class="job-title-main">Join Aigetai AI Talent Community</div>
+            <div><span class="label">Location</span><span class="value">Palo Alto, CA</span></div>
+            <div><span class="label">Employment Type</span><span class="value">Full time</span></div>
+            <div><span class="label">Location Type</span><span class="value">Hybrid</span></div>
+            <div><span class="label">Department</span><span class="value">Talent Community</span></div>
+            <div><span class="label">Compensation</span><span class="value">Competitive</span></div>
+        </div>
+        <div class="job-content">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'overview')">Overview</button>
+                <button class="tab-button" onclick="openTab(event, 'application')">Application</button>
+            </div>
+            <div id="overview" class="tab-content active">
+                <p>Join our Talent Community and stay connected with AIGETAI for future opportunities! We're always looking for talented individuals who are passionate about AI and want to be part of our mission to build multimodal AI that expands human imagination and capabilities.</p>
+                <h3>Why Join Our Talent Community?</h3>
+                <ul>
+                    <li>Be the first to know about new job openings and opportunities</li>
+                    <li>Receive updates about our latest AI research and developments</li>
+                    <li>Connect with our team and learn about our culture</li>
+                    <li>Get invited to exclusive events and networking opportunities</li>
+                    <li>Stay informed about industry trends and AI advancements</li>
+                    <li>Build relationships with our hiring team</li>
+                    <li>Access to our internal referral network</li>
+                    <li>Opportunity to contribute to our AI mission</li>
+                </ul>
+                <h3>What We're Looking For</h3>
+                <ul>
+                    <li>Passionate individuals interested in AI and machine learning</li>
+                    <li>Engineers, researchers, designers, and business professionals</li>
+                    <li>People who share our values of innovation and collaboration</li>
+                    <li>Individuals with diverse backgrounds and perspectives</li>
+                    <li>Those excited about building the future of AI</li>
+                    <li>Team players who thrive in fast-paced environments</li>
+                </ul>
+                <h3>Benefits of Joining</h3>
+                <ul>
+                    <li>Early access to job opportunities</li>
+                    <li>Direct communication with our hiring team</li>
+                    <li>Insights into our company culture and values</li>
+                    <li>Networking opportunities with AI professionals</li>
+                    <li>Updates on our latest products and research</li>
+                    <li>Invitations to company events and meetups</li>
+                    <li>Career development resources and guidance</li>
+                    <li>Connection to a community of AI enthusiasts</li>
+                </ul>
+                <p class="note">Note: Joining our talent community is free and you can opt out at any time. We respect your privacy and will only contact you with relevant opportunities.</p>
+                <div class="apply-button-section">
+                    <a href="#application" class="apply-button" onclick="openTab(event, 'application')">Join Our Talent Community</a>
+                </div>
+            </div>
+            <div id="application" class="tab-content">
+                <h3>Talent Community Registration</h3>
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name<span class="required-star">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name<span class="required-star">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email<span class="required-star">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="currentCompany">Current Company</label>
+                        <input type="text" id="currentCompany" name="currentCompany">
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Current Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle">
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExperience">Years of Professional Experience</label>
+                        <select id="yearsExperience" name="yearsExperience">
+                            <option value="">Select experience level</option>
+                            <option value="0-1">0-1 years</option>
+                            <option value="2-3">2-3 years</option>
+                            <option value="4-6">4-6 years</option>
+                            <option value="7-10">7-10 years</option>
+                            <option value="10+">10+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="interests">Areas of Interest<span class="required-star">*</span></label>
+                        <select id="interests" name="interests" required>
+                            <option value="">Select your primary interest</option>
+                            <option value="engineering">Software Engineering</option>
+                            <option value="research">AI Research</option>
+                            <option value="design">Product Design</option>
+                            <option value="business">Business Operations</option>
+                            <option value="marketing">Marketing & Growth</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Preferred Location</label>
+                        <select id="location" name="location">
+                            <option value="">Select preferred location</option>
+                            <option value="palo-alto">Palo Alto, CA</option>
+                            <option value="san-francisco">San Francisco, CA</option>
+                            <option value="new-york">New York, NY</option>
+                            <option value="remote">Remote</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalInfo">Tell us about your interest in AI and what excites you about joining AIGETAI<span class="required-star">*</span></label>
+                        <textarea id="additionalInfo" name="additionalInfo" placeholder="Share your passion for AI, your career goals, and what you hope to contribute to our mission..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume">Resume/CV (Optional)</label>
+                        <div class="file-upload" onclick="document.getElementById('resumeFile').click()">
+                            <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx">
+                            <p>Click to upload your resume (PDF, DOC, or DOCX) - Optional</p>
+                        </div>
+                    </div>
+                    <p style="margin-bottom: 10px;">Would you like to receive updates about job opportunities?<span class="required-star">*</span></p>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="updates" value="yes" required>
+                            Yes
+                        </label>
+                        <label>
+                            <input type="radio" name="updates" value="no" required>
+                            No
+                        </label>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <button type="submit" class="submit-button">Join Talent Community</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 AIGETAI. All rights reserved.</p>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+            tablinks = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        document.getElementById('resumeFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) { const fileUpload = document.querySelector('.file-upload p'); fileUpload.textContent = `Selected: ${file.name}`; }
+        });
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for joining our Talent Community! We\'ll keep you updated on future opportunities and company news.');
+        });
+    </script>
+</body>
+</html> 

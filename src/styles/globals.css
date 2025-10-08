@@ -1,0 +1,31 @@
+/* Add rounded corners */
+.rounded-corners {
+  border-radius: 20px;
+  box-sizing: border-box;
+  display: inline;
+  height: 550px;
+  left: auto;
+  margin-bottom: 84.7375px;
+  margin-left: 16.9375px;
+  margin-right: 8.4625px;
+  margin-top: 16.9375px;
+  object-fit: cover;
+  overflow-clip-margin: content-box;
+  overflow-x: clip;
+  overflow-y: clip;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  pointer-events: none;
+  position: static;
+  top: auto;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  transition-behavior: normal;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
+  transition-property: all;
+  transition-timing-function: ease;
+  width: 1450px;
+  will-change: transform;
+} 
