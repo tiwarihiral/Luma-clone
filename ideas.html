@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream MACHINE - Ideas</title>
+    <link rel="stylesheet" href="ideas-styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Left Navigation Bar -->
+        <nav class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon"></div>
+                <div class="logo-text">
+                    <div class="dream">Dream</div>
+                    <div class="machine">MACHINE</div>
+                </div>
+            </div>
+            
+            <div class="nav-items">
+                <div class="nav-item" onclick="window.location.href='dashboard.html'">
+                    <div class="nav-icon boards-icon">
+                        <img src="board.png" alt="Boards" style="width: 24px; height: 24px; object-fit: contain;">
+                    </div>
+                    <span class="nav-label">BOARDS</span>
+                </div>
+                
+                <div class="nav-item active">
+                    <div class="nav-icon ideas-icon">
+                        <img src="idea.jpg" alt="Ideas" style="width: 24px; height: 24px; object-fit: contain;">
+                    </div>
+                    <span class="nav-label">IDEAS</span>
+                </div>
+                
+                <div class="nav-item" onclick="window.location.href='editor.html'">
+                    <div class="nav-icon editor-icon">
+                        <img src="editior.png" alt="Editor" style="width: 24px; height: 24px; object-fit: contain;">
+                    </div>
+                    <span class="nav-label">EDITOR</span>
+                </div>
+            </div>
+            
+            <div class="nav-footer">
+                <div class="nav-icon help-icon"></div>
+                <div class="profile-avatar"></div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <div class="top-bar">
+                <div class="left-section">
+                    <h1 class="page-title">IDEAS</h1>
+                    <div class="tabs">
+                        <button class="tab active">All</button>
+                        <button class="tab">Videos</button>
+                        <button class="tab">Images</button>
+                    </div>
+                </div>
+                
+                <div class="right-section">
+                    <button class="filter-btn">
+                        Filter
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                    
+                    <div class="view-toggle">
+                        <button class="toggle-btn" title="Compact">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 3h6v6H3V3zm0 12h6v6H3v-6zm12-12h6v6h-6V3zm0 12h6v6h-6v-6z"/>
+                            </svg>
+                        </button>
+                        <button class="toggle-btn active" title="Relaxed">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ideas Grid -->
+            <div class="ideas-grid">
+                <!-- Idea Card 1 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design 1.jpeg" alt="Design 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Modern minimalist interface design with clean typography</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">2 HOURS AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 2 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design2.webp" alt="Design 2" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Futuristic dashboard with gradient backgrounds and glassmorphism</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">4 HOURS AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 3 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design 3.jpg" alt="Design 3" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Dark theme interface with neon accents and cyberpunk elements</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">6 HOURS AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 4 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design 4.webp" alt="Design 4" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Elegant data visualization with interactive charts and graphs</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">1 DAY AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 5 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design 5.jpg" alt="Design 5" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Mobile-first responsive design with touch-friendly interface</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">2 DAYS AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 6 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design 6.jpg" alt="Design 6" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Creative portfolio layout with artistic typography and spacing</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">3 DAYS AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 7 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design 1.jpeg" alt="Design 1 Variant" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Advanced UI components with micro-interactions and animations</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">1 WEEK AGO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Idea Card 8 -->
+                <div class="idea-card">
+                    <div class="card-image">
+                        <img src="photo/design2.webp" alt="Design 2 Variant" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                    </div>
+                    <div class="card-content">
+                        <p class="description">Enterprise dashboard with comprehensive analytics and reporting</p>
+                        <div class="metadata">
+                            <span class="type">DESCRIBE</span>
+                            <span class="separator">-</span>
+                            <span class="model">PHOTON</span>
+                            <span class="separator">-</span>
+                            <span class="time">2 WEEKS AGO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Prompt Input -->
+            <div class="prompt-input-container">
+                <div class="input-left">
+                    <button class="input-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                        </svg>
+                    </button>
+                    <button class="input-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <input type="text" class="prompt-input" placeholder="What do you want to see..." />
+                
+                <div class="input-right">
+                    <select class="generation-settings">
+                        <option>IMAGE - PHOTON - 16:9</option>
+                    </select>
+                    <button class="submit-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Add click handlers for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Handle navigation
+                const label = this.querySelector('.nav-label').textContent;
+                if (label === 'BOARDS') {
+                    window.location.href = 'dashboard.html';
+                } else if (label === 'IDEAS') {
+                    // Already on ideas page
+                } else if (label === 'EDITOR') {
+                    // Navigate to editor page
+                }
+            });
+        });
+
+        // Add click handlers for tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Add click handlers for view toggle
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update grid layout based on view mode
+                const ideasGrid = document.querySelector('.ideas-grid');
+                if (this.title === 'Compact') {
+                    ideasGrid.style.gridTemplateColumns = 'repeat(6, 1fr)';
+                } else {
+                    ideasGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+                }
+            });
+        });
+
+        // Add click handlers for idea cards
+        document.querySelectorAll('.idea-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Navigate to editor page when clicking on an idea
+                window.location.href = 'editor.html';
+            });
+        });
+
+        // Add functionality to prompt input
+        const promptInput = document.querySelector('.prompt-input');
+        const submitBtn = document.querySelector('.submit-btn');
+        
+        submitBtn.addEventListener('click', function() {
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                alert('Please enter a prompt first!');
+                return;
+            }
+            
+            // Simulate content generation
+            addNewIdea(prompt);
+            promptInput.value = '';
+        });
+        
+        promptInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+
+        // Function to add new idea to the grid
+        function addNewIdea(prompt) {
+            const ideasGrid = document.querySelector('.ideas-grid');
+            const newIdea = document.createElement('div');
+            newIdea.className = 'idea-card';
+            newIdea.innerHTML = `
+                <div class="card-image new-idea-preview"></div>
+                <div class="card-content">
+                    <p class="description">${prompt}</p>
+                    <div class="metadata">
+                        <span class="type">DESCRIBE</span>
+                        <span class="separator">-</span>
+                        <span class="model">PHOTON</span>
+                        <span class="separator">-</span>
+                        <span class="time">JUST NOW</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add click handler to new idea
+            newIdea.addEventListener('click', function() {
+                window.location.href = 'editor.html';
+            });
+            
+            // Insert at the beginning of the grid
+            ideasGrid.insertBefore(newIdea, ideasGrid.firstChild);
+            
+            // Add animation
+            newIdea.style.opacity = '0';
+            newIdea.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                newIdea.style.transition = 'all 0.3s ease';
+                newIdea.style.opacity = '1';
+                newIdea.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Add hover effects for idea cards
+        document.querySelectorAll('.idea-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-6px)';
+                this.style.borderColor = '#8b5cf6';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.borderColor = '#333';
+            });
+        });
+    </script>
+</body>
+</html> 

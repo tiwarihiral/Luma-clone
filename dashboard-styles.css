@@ -1,0 +1,429 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #000000;
+    color: white;
+    overflow: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 80px;
+    background: #111111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    border-right: 1px solid #333;
+}
+
+.logo-section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(45deg, #4ade80, #22c55e);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.logo-text {
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+.dream {
+    color: #e5e7eb;
+    font-weight: 300;
+}
+
+.machine {
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.nav-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 20px 12px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    min-width: 60px;
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.nav-item:hover .nav-icon {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.nav-item:hover .boards-icon {
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.nav-item:hover .ideas-icon {
+    box-shadow: 0 8px 25px rgba(240, 147, 251, 0.4);
+}
+
+.nav-item:hover .editor-icon {
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.nav-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-icon:hover::before {
+    opacity: 1;
+}
+
+.boards-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.boards-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    z-index: 2;
+    position: relative;
+    border-radius: 6px;
+}
+
+.ideas-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+    opacity: 0.8;
+}
+
+.ideas-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    z-index: 2;
+    position: relative;
+    border-radius: 6px;
+}
+
+.editor-icon {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+    opacity: 0.8;
+}
+
+.editor-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    z-index: 2;
+    position: relative;
+    border-radius: 6px;
+}
+
+.nav-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #e5e7eb;
+}
+
+.nav-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.help-icon {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.profile-avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    border-radius: 50%;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    background: linear-gradient(135deg, #000000 0%, #0f172a 100%);
+    padding: 40px;
+    position: relative;
+}
+
+.boards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+}
+
+.board-card {
+    background: linear-gradient(135deg, var(--card-gradient));
+    border-radius: 20px;
+    padding: 30px;
+    height: 280px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.board-card:hover {
+    transform: translateY(-5px);
+}
+
+.board-card:hover .card-thumbnail {
+    opacity: 0.5;
+}
+
+.board-card:hover .card-thumbnail img {
+    transform: scale(1.05);
+}
+
+.futuristic {
+    --card-gradient: #1e1b4b 0%, #312e81 100%;
+}
+
+.cosmic {
+    --card-gradient: #475569 0%, #64748b 100%;
+}
+
+.timeless {
+    --card-gradient: #14532d 0%, #166534 100%;
+}
+
+.lily {
+    --card-gradient: #92400e 0%, #a16207 100%;
+}
+
+.card-content {
+    position: relative;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.card-title {
+    margin-bottom: 15px;
+    line-height: 1.1;
+}
+
+.title-main {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    color: #e5e7eb;
+    margin-bottom: 5px;
+}
+
+.title-accent {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.ideas-count {
+    font-size: 16px;
+    color: #e5e7eb;
+    font-weight: 500;
+}
+
+.card-thumbnail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    opacity: 0.3;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.card-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.futuristic-thumb {
+    background: linear-gradient(45deg, #ec4899, #3b82f6);
+    background-image: 
+        radial-gradient(circle at 30% 30%, #ec4899 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, #3b82f6 0%, transparent 50%);
+}
+
+.futuristic-thumb img {
+    transition: transform 0.3s ease;
+}
+
+.cosmic-thumb {
+    background: linear-gradient(45deg, #06b6d4, #8b5cf6);
+    background-image: 
+        radial-gradient(circle at 25% 25%, #06b6d4 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, #8b5cf6 0%, transparent 50%);
+}
+
+.cosmic-thumb img {
+    transition: transform 0.3s ease;
+}
+
+.timeless-thumb {
+    background: linear-gradient(45deg, #059669, #10b981);
+    background-image: 
+        radial-gradient(circle at 20% 20%, #059669 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #10b981 0%, transparent 50%);
+}
+
+.timeless-thumb img {
+    transition: transform 0.3s ease;
+}
+
+.lily-thumb {
+    background: linear-gradient(45deg, #d97706, #f59e0b);
+    background-image: 
+        radial-gradient(circle at 30% 30%, #d97706 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, #f59e0b 0%, transparent 50%);
+}
+
+.lily-thumb img {
+    transition: transform 0.3s ease;
+}
+
+/* Add Button */
+.add-button-container {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.add-button {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.plus-icon {
+    font-size: 40px;
+    font-weight: 300;
+    color: #000;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .boards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+    }
+    
+    .main-content {
+        padding: 20px;
+    }
+    
+    .boards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .board-card {
+        height: 240px;
+        padding: 20px;
+    }
+    
+    .title-accent {
+        font-size: 24px;
+    }
+    
+    .add-button {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .plus-icon {
+        font-size: 30px;
+    }
+} 
