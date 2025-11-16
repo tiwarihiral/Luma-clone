@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager - AIGETAI Careers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: white; border-bottom: 1px solid #e1e5e9; position: sticky; top: 0; z-index: 100; }
+        .back-arrow { font-size: 1.5rem; text-decoration: none; color: #333; font-weight: bold; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #333; }
+        .job-page-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; display: grid; grid-template-columns: 300px 1fr; gap: 2rem; }
+        .job-details-sidebar { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: fit-content; position: sticky; top: 100px; }
+        .job-title-main { font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; color: #333; }
+        .job-details-sidebar > div { margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .label { font-weight: 500; color: #666; }
+        .value { font-weight: 600; color: #333; }
+        .job-content { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden; }
+        .tab-content { display: block; padding: 2rem; }
+        .tab-content.active { display: block; }
+        #application { display: none; }
+        #application.show { display: block; }
+        .tab-content h3 { margin: 1.5rem 0 1rem 0; color: #333; }
+        .tab-content ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+        .tab-content li { margin-bottom: 0.5rem; }
+        .note { background: #f8f9fa; padding: 1rem; border-radius: 4px; margin: 1rem 0; font-style: italic; color: #666; }
+        .apply-button-section { text-align: center; margin: 2rem 0; }
+        .apply-button { background-color: #6a00ff; color: #fff; padding: 15px 30px; border: none; border-radius: 8px; font-size: 18px; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease; text-decoration: none; display: inline-block;}
+        .apply-button:hover { background-color: #5a00e0;}
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: inherit; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .radio-group { display: flex; gap: 1rem; margin-top: 0.5rem; }
+        .radio-group label { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer; }
+        .radio-group input[type="radio"] { width: auto; }
+        .required-star { color: #dc3545; }
+        .file-upload { border: 2px dashed #ddd; padding: 2rem; text-align: center; border-radius: 4px; cursor: pointer; transition: border-color 0.3s ease; }
+        .file-upload:hover { border-color: #007bff; }
+        .file-upload input[type="file"] { display: none; }
+        .submit-button { background: #6a00ff; color: white; padding: 1rem 2rem; border: none; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background-color 0.3s ease;}
+        .submit-button:hover { background: #5a00e0;}
+        .footer { text-align: center; padding: 2rem; color: #666; border-top: 1px solid #e1e5e9; margin-top: 2rem; }
+        @media (max-width: 768px) { .job-page-container { grid-template-columns: 1fr; padding: 0 1rem; } .job-details-sidebar { position: static; margin-bottom: 1rem; } .header { padding: 1rem; } .tabs { flex-direction: column; } .tab-button { text-align: left; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="join-us.html" class="back-arrow">&#8592;</a>
+        <div class="logo">AIGETAI</div>
+        <div></div>
+    </div>
+    <div class="job-page-container">
+        <div class="job-details-sidebar">
+            <div class="job-title-main">Product Manager</div>
+            <div><span class="label">Employment Type</span><span class="value">Full time</span></div>
+            <div><span class="label">Department</span><span class="value">Product Engineering</span></div>
+            <div><span class="label">Compensation</span><span class="value">$150K - $250K</span></div>
+        </div>
+        <div class="job-content">
+            <div id="overview" class="tab-content active">
+                <p>We are seeking a strategic and experienced Product Manager to join our team and help drive the development of our AI-powered products. This role will be responsible for defining product strategy, gathering requirements, and working closely with engineering and design teams to deliver exceptional user experiences.</p>
+                <h3>Responsibilities</h3>
+                <ul>
+                    <li>Define product vision, strategy, and roadmap for AI-powered features</li>
+                    <li>Gather and prioritize product requirements from stakeholders and users</li>
+                    <li>Work closely with engineering and design teams to deliver high-quality products</li>
+                    <li>Conduct market research and competitive analysis</li>
+                    <li>Define and track key product metrics and KPIs</li>
+                    <li>Create detailed product specifications and user stories</li>
+                    <li>Collaborate with cross-functional teams to ensure successful product launches</li>
+                    <li>Analyze user feedback and data to inform product decisions</li>
+                    <li>Manage product lifecycle from ideation to launch and iteration</li>
+                </ul>
+                <h3>Background</h3>
+                <ul>
+                    <li>5+ years of experience in product management, preferably in AI/ML or technology companies</li>
+                    <li>Proven track record of successfully launching and scaling products</li>
+                    <li>Strong analytical skills and data-driven decision making</li>
+                    <li>Experience with agile development methodologies</li>
+                    <li>Excellent communication and stakeholder management skills</li>
+                    <li>Understanding of AI/ML technologies and their applications</li>
+                    <li>Experience with user research, A/B testing, and product analytics</li>
+                    <li>Ability to work effectively with engineering and design teams</li>
+                    <li>Bachelor's degree in Business, Engineering, or related field</li>
+                </ul>
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>Competitive salary with equity options</li>
+                    <li>Comprehensive health, dental, and vision insurance</li>
+                    <li>401(k) matching and flexible spending accounts</li>
+                    <li>Flexible work arrangements and remote work options</li>
+                    <li>Professional development and conference attendance</li>
+                    <li>Collaborative and innovative work environment</li>
+                    <li>Opportunity to shape the future of AI products</li>
+                    <li>Access to cutting-edge AI technology and resources</li>
+                </ul>
+                <p class="note">Note: This role requires strong product sense and ability to bridge technical and business requirements</p>
+                <div class="apply-button-section">
+                    <button class="apply-button" onclick="showApplicationForm()">Apply for this Job</button>
+                </div>
+            </div>
+            <div id="application" class="tab-content">
+                <h3>Application Form</h3>
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name<span class="required-star">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name<span class="required-star">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email<span class="required-star">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="currentCompany">Current Company</label>
+                        <input type="text" id="currentCompany" name="currentCompany">
+                    </div>
+                    <div class="form-group">
+                        <label for="yearsExperience">Years of Product Management Experience<span class="required-star">*</span></label>
+                        <select id="yearsExperience" name="yearsExperience" required>
+                            <option value="">Select experience level</option>
+                            <option value="1-2">1-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="6-8">6-8 years</option>
+                            <option value="8+">8+ years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productType">Type of Products Managed</label>
+                        <select id="productType" name="productType">
+                            <option value="">Select product type</option>
+                            <option value="b2b">B2B/SaaS</option>
+                            <option value="b2c">B2C</option>
+                            <option value="ai-ml">AI/ML Products</option>
+                            <option value="mobile">Mobile Apps</option>
+                            <option value="web">Web Applications</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalInfo">Tell us about your experience in product management and why you're interested in joining AIGETAI<span class="required-star">*</span></label>
+                        <textarea id="additionalInfo" name="additionalInfo" placeholder="Share your experience with product strategy, user research, and what excites you about AI technology..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="resume">Resume/CV<span class="required-star">*</span></label>
+                        <div class="file-upload" onclick="document.getElementById('resumeFile').click()">
+                            <input type="file" id="resumeFile" name="resume" accept=".pdf,.doc,.docx" required>
+                            <p>Click to upload your resume (PDF, DOC, or DOCX)</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <button type="submit" class="submit-button">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 AIGETAI. All rights reserved.</p>
+    </div>
+    <script>
+        function showApplicationForm() {
+            document.getElementById('application').classList.add('show');
+            document.getElementById('application').scrollIntoView({ behavior: 'smooth' });
+        }
+        document.getElementById('resumeFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) { const fileUpload = document.querySelector('.file-upload p'); fileUpload.textContent = `Selected: ${file.name}`; }
+        });
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your application! We will review your submission and get back to you soon.');
+        });
+    </script>
+    <script src="email.js"></script>
+</body>
+</html>

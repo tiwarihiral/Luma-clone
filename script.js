@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const propertyData = {
         1: {
             text: "Cinematic Visuals for Film",
-            promptText: "Can I have the model by the water",
+            promptText: "By the water",
             smallImages: ['assets/p-1-1.jpg', 'assets/p-1-2.jpg', 'assets/p-1-3.jpg', 'assets/p-1-4.jpg', 'assets/p-1-5.jpg'],
             propertyImages: [
                 'assets/p-1-1.jpg',
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         2: {
             text: "Interior Design Visuals",
-            promptText: "Can I have the view for kitchen",
+            promptText: "Modern kitchen",
             smallImages: ['assets/p-2-1.jpg', 'assets/p-2-2.jpg', 'assets/p-2-3.jpg', 'assets/p-2-4.jpg', 'assets/p-2-5.jpg'],
             propertyImages: [
                 'assets/p-2-1.jpg',
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         3: {
             text: "Fashion & Style Visuals",
-            promptText: "Can I have this desert be raining",
+            promptText: "Rain in desert",
             smallImages: ['assets/p-3-1.jpeg', 'assets/p-3-2.jpeg', 'assets/p-3-3.jpeg', 'assets/p-3-4.jpeg', 'assets/p-3-5.jpeg'],
             propertyImages: [
                 'assets/p-3-1.jpeg',
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         4: {
             text: "Music & Entertainment Visuals",
-            promptText: "Can I see this musician in Iceland",
+            promptText: "Artist in Iceland",
             smallImages: ['assets/p-4-1.jpeg', 'assets/p-4-2.jpg', 'assets/p-4-3.jpg', 'assets/p-4-4.jpg', 'assets/p-4-5.jpg'],
             propertyImages: [
                 'assets/p-4-1.jpeg',
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         5: {
             text: "E-commerce & Product Visuals",
-            promptText: "Can I have the flowers in terrarium",
+            promptText: "Terrarium flowers",
             smallImages: ['assets/p-5-1.jpg', 'assets/p-5-2.jpg', 'assets/p-5-3.jpg', 'assets/p-5-4.jpg', 'assets/p-5-5.jpg'],
             propertyImages: [
                 'assets/p-5-1.jpg',
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const girlImage = document.querySelector('.girl-image');
     const imageRadioGroup = document.querySelector('.image-radio-group');
     const propertyImagesContainer = document.querySelector('.property-images-container');
-    const scrollThreshold = 30;
+    const scrollThreshold = 50;
     const labels = document.querySelectorAll(".image-radio-group .circular-label");
     const group = document.querySelector(".image-radio-group");
     const total = labels.length;
@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const maxScrollForAnimation = 2000;
     const startZ = -1500;
     const endZ = 200;
-    const imageAnimationScrollRange = 1200;
-    const imageAppearanceScrollGap = 500;
+    const imageAnimationScrollRange = 1800;
+    const imageAppearanceScrollGap = 800;
     let appearedImages = {};
     let nextImageIndexToAppear = 0;
     let lastScrollPosition = 0;
@@ -167,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 ticking = true;
             }
         });
-        
 
         function handleScroll(currentScroll) {
             // Hide property images if carousel isn't visible
@@ -232,9 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const totalImages = imagesData.length;
                 const startScrollForImages = scrollThreshold;
 
-                // When calculating nextAppearanceThreshold
-const nextAppearanceThreshold = startScrollForImages + (nextImageIndexToAppear * imageAppearanceScrollGap) * 0.8;
-
+                const nextAppearanceThreshold = startScrollForImages + (nextImageIndexToAppear * imageAppearanceScrollGap);
 
                 // Show next image when scrolling down
                 if (currentScroll > lastScrollPosition && currentScroll >= nextAppearanceThreshold && nextImageIndexToAppear < totalImages) {
@@ -878,34 +875,4 @@ const nextAppearanceThreshold = startScrollForImages + (nextImageIndexToAppear *
         }
         return opacity > 0.95 && zValue !== null && Math.abs(zValue - endZ) < 5;
     }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const searchInput = document.getElementById("search-input");
-  const searchBtn = document.getElementById("search-btn");
-  const imageLabels = document.querySelectorAll(".circular-label");
-
-  function performSearch() {
-    const query = searchInput.value.toLowerCase().trim();
-    let found = false;
-
-    imageLabels.forEach(label => {
-      const alt = label.querySelector("img").alt.toLowerCase();
-      if (alt.includes(query) || query === "") {
-        label.style.display = "inline-block";
-        found = true;
-      } else {
-        label.style.display = "none";
-      }
-    });
-
-    if (!found) {
-      alert("No results found!");
-    }
-  }
-
-  searchBtn.addEventListener("click", performSearch);
-  searchInput.addEventListener("keypress", e => {
-    if (e.key === "Enter") performSearch();
-  });
 });

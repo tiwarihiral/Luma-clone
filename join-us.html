@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aigetai Private Limited - Careers Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #f7f7f7;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 0;
+            font-weight: bold;
+            font-size: 2rem;
+            letter-spacing: 2px;
+        }
+        .search-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .search-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+        .search-subtitle {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .search-bar-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .search-input:focus {
+            border-color: #007bff;
+        }
+        .search-input::placeholder {
+            color: #999;
+        }
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 20px;
+        }
+        .search-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #555;
+            background: white;
+            cursor: pointer;
+            flex: 1;
+            min-width: 150px;
+        }
+        .filter-select:focus {
+            outline: 2px solid #007bff;
+            border-color: #007bff;
+        }
+        .search-stats {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .results-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .results-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e1e5e9;
+        }
+        .results-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        .results-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .job-result {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .job-result:hover {
+            background-color: #f8f9fa;
+            text-decoration: none;
+        }
+        .job-result:last-child {
+            border-bottom: none;
+        }
+        .job-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #007bff;
+            margin-bottom: 8px;
+        }
+        .job-department {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .job-description {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        .job-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .keyword-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: #666;
+        }
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        .no-results-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .no-results-text {
+            font-size: 14px;
+        }
+        .company-info {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .company-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .company-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .company-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .value-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .value-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .value-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        .footer {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 50px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer-links a {
+            color: #777;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .ashby-logo {
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .search-container, .company-info {
+                padding: 20px;
+            }
+            .search-title {
+                font-size: 24px;
+            }
+            .search-filters {
+                flex-direction: column;
+            }
+            .filter-select {
+                min-width: auto;
+            }
+            .company-values {
+                grid-template-columns: 1fr;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .footer-links a {
+                margin: 0 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo">
+            AIGETAI
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <h1 class="search-title">Find Your Perfect Role</h1>
+            <p class="search-subtitle">Search through all our open positions and company information</p>
+            
+            <div class="search-bar-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for jobs, skills, departments, or any keywords...">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="search-filters">
+                <select id="departmentFilter" class="filter-select">
+                    <option value="">All Departments</option>
+                    <option value="Business Operations">Business Operations</option>
+                    <option value="GTM">GTM</option>
+                    <option value="Product Engineering">Product Engineering</option>
+                    <option value="Research & Applied Research">Research & Applied Research</option>
+                    <option value="Talent Community">Talent Community</option>
+                </select>
+                <select id="employmentFilter" class="filter-select">
+                    <option value="">All Employment Types</option>
+                    <option value="Full time">Full time</option>
+                </select>
+                <select id="experienceFilter" class="filter-select">
+                    <option value="">All Experience Levels</option>
+                    <option value="entry">Entry Level (0-2 years)</option>
+                    <option value="mid">Mid Level (3-5 years)</option>
+                    <option value="senior">Senior Level (6+ years)</option>
+                </select>
+            </div>
+            
+            <div class="search-stats" id="searchStats">
+                Showing all positions
+            </div>
+        </div>
+
+        <div class="company-info">
+            <h2 class="company-title">About Aigetai Private Limited</h2>
+            <p class="company-description">
+                Our mission is to build multimodal AI to expand human imagination and capabilities. 
+                We believe that multimodality is critical for intelligence. To go beyond language 
+                models and build more aware, capable and useful systems, the next step function 
+                change will come from vision. We are working on training and scaling up 
+                multimodal foundation models for systems that can see and understand, show and 
+                explain, and eventually interact with our world to effect change.
+            </p>
+            <div class="company-values">
+                <div class="value-item">
+                    <div class="value-title">Why Join Us</div>
+                    <div class="value-text">We bring together the best team in the world to achieve our goal, from researchers to engineers and designers to growth operators</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-title">Product Focus</div>
+                    <div class="value-text">We are deeply product focused and our vision merging AI models and delightful products is unique in the industry</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-title">What We Value</div>
+                    <div class="value-text">Expertise in your field, urgency and execution, problem solving mindset, clear communication, and product focus</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-container">
+            <div class="results-header">
+                <h3 class="results-title">Search Results</h3>
+            </div>
+            <div class="results-list" id="resultsList">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="powered-by">Powered by <span class="ashby-logo">Aigetai</span></div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Security</a>
+            <a href="#">Vulnerability Disclosure</a>
+        </div>
+    </footer>
+
+    <script>
+        // Job data with comprehensive information for search
+        const jobData = [
+            {
+                title: "AI Agent Engineer",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "ai-agent-engineer.html",
+                description: "Design and implement AI agent architectures and frameworks. Develop intelligent agents capable of autonomous decision-making.",
+                keywords: ["AI", "Machine Learning", "Python", "PyTorch", "TensorFlow", "Agents", "Autonomous Systems", "Deep Learning", "Neural Networks", "Computer Vision", "NLP"]
+            },
+            {
+                title: "Product Designer",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "product-designer.html",
+                description: "Design user interfaces and experiences for AI-powered products. Create wireframes, prototypes, and high-fidelity designs.",
+                keywords: ["Design", "UX", "UI", "Figma", "User Research", "Prototyping", "Accessibility", "Design Systems", "User Experience", "Interface Design"]
+            },
+            {
+                title: "Software Engineer - Backend",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-backend.html",
+                description: "Design and implement scalable backend services and APIs. Build and optimize database schemas and data models.",
+                keywords: ["Backend", "Python", "Go", "Java", "APIs", "Microservices", "Database", "PostgreSQL", "AWS", "Docker", "Kubernetes"]
+            },
+            {
+                title: "Research Scientist",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "senior",
+                link: "research-scientist.html",
+                description: "Conduct original research in AI, machine learning, and multimodal systems. Develop and implement novel algorithms and model architectures.",
+                keywords: ["Research", "PhD", "Machine Learning", "Deep Learning", "Publications", "Algorithms", "Neural Networks", "Computer Vision", "NLP", "Multimodal"]
+            },
+            {
+                title: "Data Scientist",
+                department: "Business Operations",
+                employment: "Full time",
+                experience: "mid",
+                link: "data-scientist.html",
+                description: "Define data-driven culture across consumer product and developer platform. Set up data science infrastructure and dashboards.",
+                keywords: ["Data Science", "Analytics", "Statistics", "Python", "SQL", "Machine Learning", "A/B Testing", "Dashboards", "Metrics", "Growth"]
+            },
+            {
+                title: "Growth Marketer",
+                department: "GTM",
+                employment: "Full time",
+                experience: "mid",
+                link: "growth-marketer.html",
+                description: "Develop and implement growth marketing strategies across digital channels. Design and run experiments to optimize user acquisition.",
+                keywords: ["Marketing", "Growth", "Digital Marketing", "A/B Testing", "Analytics", "User Acquisition", "Conversion", "SEO", "Content Marketing", "Campaigns"]
+            },
+            {
+                title: "Compensation Analyst",
+                department: "Business Operations",
+                employment: "Full time",
+                experience: "mid",
+                link: "compensation-analyst.html",
+                description: "Analyze compensation data and develop competitive salary structures. Ensure fair and equitable compensation practices.",
+                keywords: ["Compensation", "HR", "Analytics", "Salary", "Benefits", "Equity", "Market Research", "Payroll", "Total Rewards"]
+            },
+            {
+                title: "Recruiter - GTM",
+                department: "Business Operations",
+                employment: "Full time",
+                experience: "mid",
+                link: "recruiter-gtm.html",
+                description: "Source and recruit top talent for GTM roles. Build relationships with candidates and hiring managers.",
+                keywords: ["Recruiting", "Talent Acquisition", "GTM", "Sales", "Marketing", "Sourcing", "Interviews", "Candidate Experience"]
+            },
+            {
+                title: "Recruiter - Product & Engineering",
+                department: "Business Operations",
+                employment: "Full time",
+                experience: "mid",
+                link: "recruiter-product-engineering.html",
+                description: "Source and recruit technical talent for product and engineering teams. Build relationships with top engineers and designers.",
+                keywords: ["Recruiting", "Engineering", "Product", "Technical", "Software", "Design", "Talent Acquisition", "Sourcing"]
+            },
+            {
+                title: "Sr Manager, People Operations",
+                department: "Business Operations",
+                employment: "Full time",
+                experience: "senior",
+                link: "sr-manager-people-operations.html",
+                description: "Lead people operations strategy and execution. Manage HR processes, policies, and employee experience.",
+                keywords: ["HR", "People Operations", "Management", "Policy", "Employee Experience", "Culture", "Leadership", "Strategy"]
+            },
+            {
+                title: "Account Executive – Advertising",
+                department: "GTM",
+                employment: "Full time",
+                experience: "mid",
+                link: "account-executive-advertising.html",
+                description: "Build and manage relationships with advertising clients. Drive revenue growth through strategic partnerships.",
+                keywords: ["Sales", "Advertising", "Account Management", "Revenue", "Client Relations", "Partnerships", "GTM"]
+            },
+            {
+                title: "Account Executive – Brands",
+                department: "GTM",
+                employment: "Full time",
+                experience: "mid",
+                link: "account-executive-brands.html",
+                description: "Develop partnerships with major brands. Create and execute brand partnership strategies.",
+                keywords: ["Sales", "Brands", "Partnerships", "Account Management", "Revenue", "Client Relations", "GTM"]
+            },
+            {
+                title: "Account Executive – Entertainment",
+                department: "GTM",
+                employment: "Full time",
+                experience: "mid",
+                link: "account-executive-entertainment.html",
+                description: "Build relationships with entertainment industry clients. Drive adoption of AI solutions in entertainment.",
+                keywords: ["Sales", "Entertainment", "Media", "Partnerships", "Account Management", "Revenue", "GTM"]
+            },
+            {
+                title: "Business Development and Strategic Partnerships",
+                department: "GTM",
+                employment: "Full time",
+                experience: "senior",
+                link: "business-development-strategic-partnerships.html",
+                description: "Develop and execute strategic partnerships. Identify and pursue high-value business opportunities.",
+                keywords: ["Business Development", "Strategic Partnerships", "Strategy", "Revenue", "Partnerships", "GTM", "Leadership"]
+            },
+            {
+                title: "Business Development Executive – Agency Partnerships",
+                department: "GTM",
+                employment: "Full time",
+                experience: "mid",
+                link: "business-development-executive-agency-partnerships.html",
+                description: "Build and manage relationships with advertising agencies. Drive agency adoption of AI solutions.",
+                keywords: ["Business Development", "Agencies", "Partnerships", "Sales", "GTM", "Account Management"]
+            },
+            {
+                title: "Business Development Executive – Brand Partnerships",
+                department: "GTM",
+                employment: "Full time",
+                experience: "mid",
+                link: "business-development-executive-brand-partnerships.html",
+                description: "Develop partnerships with major brands. Create and execute brand partnership strategies.",
+                keywords: ["Business Development", "Brands", "Partnerships", "Sales", "GTM", "Account Management"]
+            },
+            {
+                title: "Brand Designer",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "brand-designer.html",
+                description: "Create and maintain brand identity across all touchpoints. Develop visual design systems and guidelines.",
+                keywords: ["Design", "Brand", "Visual Identity", "Creative", "Graphics", "Brand Guidelines", "Marketing"]
+            },
+            {
+                title: "Distributed Systems Engineer",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "senior",
+                link: "distributed-systems-engineer.html",
+                description: "Design and implement distributed systems architecture. Build scalable and reliable infrastructure.",
+                keywords: ["Distributed Systems", "Scalability", "Infrastructure", "Microservices", "Cloud", "Architecture", "Performance"]
+            },
+            {
+                title: "Product Manager",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "senior",
+                link: "product-manager.html",
+                description: "Define product strategy and roadmap. Collaborate with engineering and design teams to deliver products.",
+                keywords: ["Product Management", "Strategy", "Roadmap", "User Research", "Analytics", "Leadership", "Cross-functional"]
+            },
+            {
+                title: "Software Engineer - Data Infrastructure",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-data-infrastructure.html",
+                description: "Build and maintain data infrastructure. Design and implement data pipelines and storage systems.",
+                keywords: ["Data Infrastructure", "Pipelines", "Storage", "Big Data", "Analytics", "Python", "SQL", "Cloud"]
+            },
+            {
+                title: "Software Engineer - Frontend UI",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-frontend-ui.html",
+                description: "Build user interfaces and frontend applications. Create responsive and accessible web experiences.",
+                keywords: ["Frontend", "React", "JavaScript", "UI", "Web", "Responsive", "Accessibility", "CSS", "HTML"]
+            },
+            {
+                title: "Software Engineer - iOS",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-ios.html",
+                description: "Develop iOS applications and mobile experiences. Build native iOS apps with modern frameworks.",
+                keywords: ["iOS", "Swift", "Mobile", "Native", "UIKit", "SwiftUI", "Xcode", "App Store"]
+            },
+            {
+                title: "Software Engineer - Product",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-product.html",
+                description: "Build product features and user-facing functionality. Collaborate with product and design teams.",
+                keywords: ["Product", "Features", "User Experience", "Full-stack", "Collaboration", "Product Development"]
+            },
+            {
+                title: "Software Engineer - Reliability",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-reliability.html",
+                description: "Ensure system reliability and performance. Build monitoring and alerting systems.",
+                keywords: ["Reliability", "Monitoring", "Performance", "DevOps", "SRE", "Infrastructure", "Alerting"]
+            },
+            {
+                title: "Software Engineer - Test Automation & QA",
+                department: "Product Engineering",
+                employment: "Full time",
+                experience: "mid",
+                link: "software-engineer-test-automation-qa.html",
+                description: "Build automated testing frameworks and ensure code quality. Implement CI/CD testing pipelines.",
+                keywords: ["Testing", "QA", "Automation", "CI/CD", "Quality", "Frameworks", "Test Cases"]
+            },
+            {
+                title: "AI Tooling Engineer",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "ai-tooling-engineer.html",
+                description: "Build tools and infrastructure for AI research and development. Create developer tools and frameworks.",
+                keywords: ["AI Tools", "Infrastructure", "Developer Tools", "Frameworks", "Research", "MLOps", "Automation"]
+            },
+            {
+                title: "HPC Engineer - Research Infrastructure",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "senior",
+                link: "hpc-engineer-research-infrastructure.html",
+                description: "Design and maintain high-performance computing infrastructure. Optimize compute resources for AI training.",
+                keywords: ["HPC", "High Performance Computing", "Infrastructure", "GPU", "Training", "Optimization", "Research"]
+            },
+            {
+                title: "Research Engineer - Applied Research",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "research-engineer-applied-research.html",
+                description: "Apply research findings to practical problems. Bridge the gap between research and product development.",
+                keywords: ["Applied Research", "Engineering", "Implementation", "Product", "Research", "Development"]
+            },
+            {
+                title: "Research Engineer - Computer Vision",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "research-engineer-computer-vision.html",
+                description: "Develop computer vision algorithms and models. Work on image and video understanding systems.",
+                keywords: ["Computer Vision", "Image Processing", "Deep Learning", "CNN", "Object Detection", "Segmentation", "Research"]
+            },
+            {
+                title: "Research Engineer - Foundation Models",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "research-engineer-foundation-models.html",
+                description: "Develop and improve foundation models. Work on large-scale language and multimodal models.",
+                keywords: ["Foundation Models", "LLM", "Large Language Models", "Multimodal", "Training", "Research", "Deep Learning"]
+            },
+            {
+                title: "Research Engineer - Multimodal Language Models",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "research-engineer-multimodal-language-models.html",
+                description: "Develop multimodal AI systems that can understand text, images, and other modalities.",
+                keywords: ["Multimodal", "Language Models", "Vision", "Text", "Images", "AI", "Research", "Deep Learning"]
+            },
+            {
+                title: "Research Engineer - Performance Optimization",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "research-engineer-performance-optimization.html",
+                description: "Optimize AI model performance and efficiency. Work on model compression and acceleration techniques.",
+                keywords: ["Performance", "Optimization", "Efficiency", "Compression", "Acceleration", "Research", "Deep Learning"]
+            },
+            {
+                title: "Research Engineer - Training Efficiency",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "research-engineer-training-efficiency.html",
+                description: "Improve AI model training efficiency and speed. Develop new training techniques and optimizations.",
+                keywords: ["Training", "Efficiency", "Optimization", "Deep Learning", "Research", "Algorithms", "Performance"]
+            },
+            {
+                title: "Research Scientist - Multimodal Language Models",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "senior",
+                link: "research-scientist-multimodal-language-models.html",
+                description: "Conduct research on multimodal language models. Publish papers and advance the state of the art.",
+                keywords: ["Research", "Multimodal", "Language Models", "Publications", "PhD", "Deep Learning", "AI Research"]
+            },
+            {
+                title: "Senior Machine Learning Engineer - Hardware Abstractions & Performance Optimization",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "senior",
+                link: "senior-machine-learning-engineer-hardware-abstractions.html",
+                description: "Develop hardware abstractions and optimize ML performance. Work on GPU and specialized hardware optimization.",
+                keywords: ["ML Engineering", "Hardware", "Performance", "GPU", "Optimization", "Abstractions", "Senior", "Leadership"]
+            },
+            {
+                title: "Technical Artist - Language & Prompt Systems",
+                department: "Research & Applied Research",
+                employment: "Full time",
+                experience: "mid",
+                link: "technical-artist-language-prompt-systems.html",
+                description: "Create technical art and visual systems for AI applications. Develop prompt engineering and visual generation tools.",
+                keywords: ["Technical Art", "Visual", "Prompts", "Creative", "AI Art", "Generation", "Tools", "Design"]
+            },
+            {
+                title: "Join Aigetai Private Limited Talent Community",
+                department: "Talent Community",
+                employment: "Full time",
+                experience: "entry",
+                link: "join-aigetai-ai-talent-community.html",
+                description: "Join our talent community to stay updated on new opportunities. Open to all backgrounds and experience levels.",
+                keywords: ["Talent Community", "Opportunities", "Networking", "Career", "All Backgrounds", "Future Roles"]
+            }
+        ];
+
+        // Company information for search
+        const companyInfo = {
+            title: "Aigetai Private Limited",
+            description: "Our mission is to build multimodal AI to expand human imagination and capabilities. We believe that multimodality is critical for intelligence. To go beyond language models and build more aware, capable and useful systems, the next step function change will come from vision. We are working on training and scaling up multimodal foundation models for systems that can see and understand, show and explain, and eventually interact with our world to effect change.",
+            values: [
+                "Expertise in your field",
+                "Urgency, velocity and execution", 
+                "Problem solving mindset",
+                "Clear communication",
+                "Product focus"
+            ],
+            whyJoin: [
+                "Aigetai Private Limited is bringing together the best team in the world to achieve our goal, from researchers to engineers and designers to growth operators",
+                "Aigetai Private Limited is not just a lab - we are deeply product focused and our vision merging AI models and delightful products is unique in the industry",
+                "We build. We ship. Our early products have been wildly successful"
+            ]
+        };
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const departmentFilter = document.getElementById('departmentFilter').value;
+            const employmentFilter = document.getElementById('employmentFilter').value;
+            const experienceFilter = document.getElementById('experienceFilter').value;
+            
+            let filteredJobs = jobData.filter(job => {
+                const matchesSearch = searchTerm === '' || 
+                    job.title.toLowerCase().includes(searchTerm) ||
+                    job.description.toLowerCase().includes(searchTerm) ||
+                    job.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm)) ||
+                    job.department.toLowerCase().includes(searchTerm);
+                
+                const matchesDepartment = departmentFilter === '' || job.department === departmentFilter;
+                const matchesEmployment = employmentFilter === '' || job.employment === employmentFilter;
+                const matchesExperience = experienceFilter === '' || job.experience === experienceFilter;
+                
+                return matchesSearch && matchesDepartment && matchesEmployment && matchesExperience;
+            });
+
+            displayResults(filteredJobs, searchTerm);
+        }
+
+        function displayResults(jobs, searchTerm) {
+            const resultsList = document.getElementById('resultsList');
+            const searchStats = document.getElementById('searchStats');
+            
+            searchStats.textContent = `Showing ${jobs.length} position${jobs.length !== 1 ? 's' : ''}`;
+            
+            if (jobs.length === 0) {
+                resultsList.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <div class="no-results-title">No positions found</div>
+                        <div class="no-results-text">Try adjusting your search criteria or browse all positions</div>
+                    </div>
+                `;
+                return;
+            }
+
+            resultsList.innerHTML = jobs.map(job => {
+                const highlightedTitle = highlightText(job.title, searchTerm);
+                const highlightedDescription = highlightText(job.description, searchTerm);
+                const keywordTags = job.keywords.slice(0, 5).map(keyword => 
+                    `<span class="keyword-tag">${highlightText(keyword, searchTerm)}</span>`
+                ).join('');
+
+                return `
+                    <a href="${job.link}" class="job-result">
+                        <div class="job-title">${highlightedTitle}</div>
+                        <div class="job-department">${job.department} • ${job.employment}</div>
+                        <div class="job-description">${highlightedDescription}</div>
+                        <div class="job-keywords">${keywordTags}</div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', performSearch);
+        document.getElementById('departmentFilter').addEventListener('change', performSearch);
+        document.getElementById('employmentFilter').addEventListener('change', performSearch);
+        document.getElementById('experienceFilter').addEventListener('change', performSearch);
+
+        // Initialize with all jobs
+        displayResults(jobData, '');
+    </script>
+</body>
+</html> 
